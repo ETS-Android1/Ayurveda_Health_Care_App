@@ -63,7 +63,7 @@ public class RegisterPatient extends AppCompatActivity {
 
         //if the user is logged in, direct them to the homepage
         if(fAuth.getCurrentUser() != null){
-            startActivity(new Intent(getApplicationContext(),MainActivity.class));
+            startActivity(new Intent(getApplicationContext(),Dashboard.class));
             finish();
         }
 
@@ -143,7 +143,7 @@ public class RegisterPatient extends AppCompatActivity {
                                 }
                             });
 
-                            startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                            startActivity(new Intent(getApplicationContext(),Dashboard.class));
 
                         }
                         else{

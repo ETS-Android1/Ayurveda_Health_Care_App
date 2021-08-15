@@ -11,6 +11,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AyurvedaHealthCareApp">
+        <activity android:name=".doctor_Activity"></activity>
+        <activity android:name=".home_remidies_Activity" />
+        <activity android:name=".calender_Activity" />
+        <activity android:name=".medicine_Activity" />
+        <activity android:name=".pharmacy_Activity" />
+        <activity android:name=".location_Activity" />
+        <activity android:name=".Dashboard" />
         <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,12 +28,8 @@
         <activity android:name=".RegisterDoctor" />
         <activity android:name=".RegisterPatient" />
         <activity android:name=".ChoicePage" />
-        <activity android:name=".Login">
-
-        </activity>
-        <activity android:name=".MainActivity">
-
-        </activity>
+        <activity android:name=".Login" />
+        <activity android:name=".MainActivity" />
 
         <meta-data
             android:name="preloaded_fonts"
