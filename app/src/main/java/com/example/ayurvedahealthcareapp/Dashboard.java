@@ -6,10 +6,13 @@ import androidx.cardview.widget.CardView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 
 public class Dashboard extends AppCompatActivity {
 
     CardView location,calender,doctor,medicine,home_remedies,pharmacy;
+    ImageView profile;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,7 +23,16 @@ public class Dashboard extends AppCompatActivity {
         home_remedies=findViewById(R.id.hom);
         calender=findViewById(R.id.cal);
         medicine=findViewById(R.id.med);
+        profile = findViewById(R.id.profilePicture);
 
+
+        profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
 
         final Intent intent1=new Intent(this,location_Activity.class);
         String name="Vinod Piumantha ";
@@ -48,7 +60,6 @@ public class Dashboard extends AppCompatActivity {
 
 
 
-
         final Intent intent3=new Intent(this,pharmacy_Activity.class);
        // String name="Vinod Piumantha ";
        // intent3.putExtra("User_Name",name );
@@ -60,8 +71,6 @@ public class Dashboard extends AppCompatActivity {
             }
 
         });
-
-
 
 
 

@@ -109,9 +109,13 @@ public class RegisterDoctor extends AppCompatActivity {
                 String birthdate = dBirthDate.getText().toString();
                 String phone = dPhone.getText().toString();
 
-                //if email,password,nic and registration number is empty
+                // Validation
+                // If email,password,nic and registration number is empty
+                if(TextUtils.isEmpty(fullName)){
+                    dFullName.setError("Enter your full name!");
+                }
                 if(TextUtils.isEmpty(email)){
-                    dEmail.setError(("Email is required. "));
+                    dEmail.setError(("Email is required! "));
                     return;
                 }
                 if(TextUtils.isEmpty(nic)){

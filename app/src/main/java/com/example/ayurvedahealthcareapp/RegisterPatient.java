@@ -98,6 +98,9 @@ public class RegisterPatient extends AppCompatActivity {
                 String phone = pPhone.getText().toString();
                 String birthdate = pBirthDate.getText().toString();
 
+                if(TextUtils.isEmpty(fullName)){
+                    pFullName.setError("Enter your full name!");
+                }
                 if(TextUtils.isEmpty(email)){
                     pEmail.setError(("Email is required. "));
                     return;
