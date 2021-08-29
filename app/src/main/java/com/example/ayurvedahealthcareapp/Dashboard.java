@@ -4,35 +4,60 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class Dashboard extends AppCompatActivity {
 
     CardView location,calender,doctor,medicine,home_remedies,pharmacy;
-    ImageView profile;
+    CircleImageView profileImage;
+    FirebaseAuth fAuth;
+    StorageReference storageReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+
         location=findViewById(R.id.locid);
         pharmacy=findViewById(R.id.phar);
         doctor=findViewById(R.id.doc);
         home_remedies=findViewById(R.id.hom);
         calender=findViewById(R.id.cal);
         medicine=findViewById(R.id.med);
-        profile = findViewById(R.id.profilePicture);
+        profileImage = findViewById(R.id.profilePicture);
+
+        fAuth       = FirebaseAuth.getInstance();
+        storageReference = FirebaseStorage.getInstance().getReference();
 
 
-        profile.setOnClickListener(new View.OnClickListener() {
+        //load profile picture
+        StorageReference profileRef = storageReference.child("users/"+fAuth.getCurrentUser().getUid()+"Profile.jpg");
+        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Picasso.get().load(uri).into(profileImage);
+            }
+        });
+        // go to profile
+        profileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
             }
         });
+
 
         final Intent intent1=new Intent(this,location_Activity.class);
         String name="Vinod Piumantha ";

@@ -36,7 +36,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profilePicture"
             android:layout_width="100dp"
             android:layout_height="67dp"
@@ -46,7 +46,9 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/textView"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/profile" />
+            android:src="@drawable/profile"
+            app:civ_border_width="2dp"
+            app:civ_border_color="#299125"/>
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -235,18 +237,18 @@
                     <TextView
                         android:id="@+id/textView8"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_below="@id/cycle"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="5dp"
                         android:text="Home Remedies"
                         android:textSize="18sp"
                         app:fontFamily="@font/aclonica" />
 
                     <ImageView
                         android:id="@+id/cycle"
-                        android:layout_width="75dp"
-                        android:layout_height="75dp"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="15dp"
                         app:srcCompat="@drawable/beheth" />

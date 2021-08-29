@@ -11,8 +11,7 @@
         android:layout_height="match_parent"
         android:background="@color/backgroundColor">
 
-
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profilePicture"
             android:layout_width="150dp"
             android:layout_height="150dp"
@@ -20,7 +19,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/profile" />
+            android:src="@drawable/profile"
+            app:civ_border_width="2dp"
+            app:civ_border_color="#299125"/>
+
 
         <TextView
             android:id="@+id/fullName"
@@ -114,10 +116,26 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="150dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="24dp"
             android:backgroundTint="#299125"
             android:text="Change Password"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/changeProPic" />
+
+        <Button
+            android:id="@+id/changeProPic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="150dp"
+            android:layout_marginEnd="24dp"
+            android:backgroundTint="#299125"
+            android:text="Change Profile Picture"
+            android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
