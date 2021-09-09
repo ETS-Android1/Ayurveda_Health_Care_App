@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="right"
+
+    tools:context=".Doctor_dashboard">
+    <LinearLayout
+
+        android:layout_width= "match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:src="@drawable/back_image"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dashboard"
+                android:layout_alignParentRight="true"
+                android:textSize="25sp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+               />
+        </RelativeLayout>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/d_me"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="20dp"
+            android:layout_marginTop="40dp"
+            app:cardCornerRadius="19dp"
+            app:cardElevation="20dp"
+            android:layout_margin="20dp"
+            >
+            <RelativeLayout
+
+
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+
+
+
+                >
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:src="@drawable/profile"
+                    android:scaleType="centerInside"
+                    android:background="@color/profile"
+
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/aclonica"
+
+                    android:text="Me"
+                    android:textAlignment="center"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/teal_700"
+                    android:textSize="30sp"
+                    />
+
+
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="20dp"
+            android:layout_marginTop="40dp"
+            app:cardCornerRadius="19dp"
+            app:cardElevation="20dp"
+            android:layout_margin="20dp"
+            >
+            <RelativeLayout
+
+
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+
+
+
+                >
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:src="@drawable/medicine"
+                    android:scaleType="centerInside"
+                    android:background="@color/profile"
+
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/aclonica"
+
+                    android:text="Appointmrnts"
+                    android:textAlignment="center"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/teal_700"
+                    android:textSize="30sp"
+                    />
+
+
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="20dp"
+            android:layout_marginTop="40dp"
+            app:cardCornerRadius="19dp"
+            app:cardElevation="20dp"
+            android:layout_margin="20dp"
+            >
+            <RelativeLayout
+
+
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+
+
+
+                >
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:src="@drawable/beheth"
+                    android:scaleType="centerInside"
+                    android:background="@color/profile"
+
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/aclonica"
+
+                    android:text="Home Remidies"
+                    android:textAlignment="center"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/teal_700"
+                    android:textSize="30sp"
+                    />
+
+
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="20dp"
+            android:layout_marginTop="40dp"
+            app:cardCornerRadius="19dp"
+            app:cardElevation="20dp"
+            android:layout_margin="20dp"
+            >
+            <RelativeLayout
+
+
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+
+
+
+                >
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:src="@drawable/pharmacy"
+                    android:scaleType="centerInside"
+                    android:background="@color/profile"
+
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/aclonica"
+
+                    android:text="Plants"
+                    android:textAlignment="center"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/teal_700"
+                    android:textSize="30sp"
+                    />
+
+
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="20dp"
+            android:layout_marginTop="40dp"
+            app:cardCornerRadius="19dp"
+            app:cardElevation="20dp"
+            android:layout_margin="20dp"
+            >
+            <RelativeLayout
+
+
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+
+
+
+                >
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:src="@drawable/doctor"
+                    android:scaleType="centerInside"
+                    android:background="@color/profile"
+
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/aclonica"
+
+                    android:text="Card View"
+                    android:textAlignment="center"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/teal_700"
+                    android:textSize="30sp"
+                    />
+
+
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+
+   </LinearLayout>
+</ScrollView >
