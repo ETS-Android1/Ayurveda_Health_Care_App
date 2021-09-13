@@ -18,14 +18,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AyurvedaHealthCareApp">
-        <activity android:name=".Doctor_Me"></activity>
         <activity android:name=".Doctor_dashboard" />
-        <activity
-            android:name=".ui.doctor_dashboard"
-            android:label="@string/title_activity_doctor_dashboard" />
-        <activity
-            android:name=".doctor_dashboard"
-            android:label="@string/title_activity_doctor_dashboard" />
+
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
