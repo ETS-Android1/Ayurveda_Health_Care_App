@@ -84,31 +84,18 @@ public class MainActivity extends AppCompatActivity {
         // Fetch data from database and display
 
         DocumentReference documentReference = fStore.collection("Users").document(userId);
+        documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
 
-            documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
-                @Override
-                public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                    phone.setText(documentSnapshot.getString("phone"));
+                    fullName.setText(documentSnapshot.getString("fName"));
+                    email.setText(documentSnapshot.getString("email"));
+                    birthDate.setText(documentSnapshot.getString("birthDate"));
 
-                    if(value.exists()) {
-                        phone.setText(value.getString("phone"));
-                        fullName.setText(value.getString("fName"));
-                        email.setText(value.getString("email"));
-                        birthDate.setText(value.getString("birthDate"));
-                    }
-                    else{
-                        DocumentReference documentReference2  = fStore.collection("Doctors").document(userId);
-                        documentReference2.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-                            @Override
-                            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                                phone.setText(value.getString("phone"));
-                                fullName.setText(value.getString("fName"));
-                                email.setText(value.getString("email"));
-                                birthDate.setText(value.getString("birthDate"));
-                            }
-                        });
-                    }
-                }
-            });
+            }
+        });
+
 
 
             //Change password

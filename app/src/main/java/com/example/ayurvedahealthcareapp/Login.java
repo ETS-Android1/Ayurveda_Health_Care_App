@@ -7,8 +7,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,6 +32,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 
 public class Login extends AppCompatActivity {
 
+    public static final String TAG = "TAG";
     EditText nEmail,nPassword;
     Button nLoginBtn;
     TextView nCreateBtn,forgotTextLink;
@@ -49,8 +52,10 @@ public class Login extends AppCompatActivity {
         nLoginBtn       = findViewById(R.id.loginButton);
         nCreateBtn      = findViewById(R.id.createText);
         fAuth           = FirebaseAuth.getInstance();
+        fStore      = FirebaseFirestore.getInstance();
         progressBar     = findViewById(R.id.progressBarLogin);
         forgotTextLink  = findViewById(R.id.forgotPassword);
+
 
         nLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,13 +79,34 @@ public class Login extends AppCompatActivity {
 
                 progressBar.setVisibility(View.VISIBLE);
 
-
+                // Sign in to the app
                 fAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             Toast.makeText(Login.this, "Logged in successfully", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(),Dashboard.class));
+                            try {
+                                userId = fAuth.getCurrentUser().getUid();
+
+                                DocumentReference documentReference = fStore.collection("Users").document(userId);
+
+                                documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                        if (documentSnapshot.getString("isPatient") != null) {
+                                            startActivity(new Intent(getApplicationContext(), Dashboard.class));
+                                            finish();
+                                        }
+                                        if (documentSnapshot.getString("isDoctor") != null) {
+                                            startActivity(new Intent(getApplicationContext(), Doctor_dashboard.class));
+                                            finish();
+                                        }
+                                    }
+                                });
+                            }
+                            catch (Exception e){
+                                Toast.makeText(Login.this, "Error!!" + e, Toast.LENGTH_SHORT).show();
+                            }
 
                         }
                         else{
@@ -99,6 +125,7 @@ public class Login extends AppCompatActivity {
             }
         });
 
+        //reset password
         forgotTextLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -138,5 +165,36 @@ public class Login extends AppCompatActivity {
                 passwordResetDialog.create().show();
             }
         });
+    }
+
+    //If the user is already logged in direct them to the dashboard
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if(fAuth.getInstance().getCurrentUser() !=null){
+            try {
+                userId = fAuth.getCurrentUser().getUid();
+
+                DocumentReference documentReference = fStore.collection("Users").document(userId);
+
+                documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.getString("isPatient") != null) {
+                            startActivity(new Intent(getApplicationContext(), Dashboard.class));
+                            finish();
+                        }
+                        if (documentSnapshot.getString("isDoctor") != null) {
+                            startActivity(new Intent(getApplicationContext(), Doctor_dashboard.class));
+                            finish();
+                        }
+                    }
+                });
+            }
+            catch (Exception e){
+                Toast.makeText(Login.this, "Error!!" + e, Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }

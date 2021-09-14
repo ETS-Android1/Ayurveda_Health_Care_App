@@ -133,6 +133,7 @@ public class RegisterPatient extends AppCompatActivity {
                             user.put("birthDate",birthdate);
                             user.put("email",email);
                             user.put("phone",phone);
+                            user.put("isPatient","1");
 
                             documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override

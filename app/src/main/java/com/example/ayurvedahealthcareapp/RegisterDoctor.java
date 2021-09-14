@@ -150,7 +150,7 @@ public class RegisterDoctor extends AppCompatActivity {
 
                             //Storing doctor information in the database
                             doctorID = fAuth.getCurrentUser().getUid();
-                            DocumentReference documentReference = fStore.collection("Doctors").document(doctorID);
+                            DocumentReference documentReference = fStore.collection("Users").document(doctorID);
                             Map<String,Object> doctor = new HashMap<>();
                             doctor.put("fName",fullName);
                             doctor.put("birthDate",birthdate);
@@ -158,6 +158,7 @@ public class RegisterDoctor extends AppCompatActivity {
                             doctor.put("phone",phone);
                             doctor.put("NIC",nic);
                             doctor.put("Registration_ID",regId);
+                            doctor.put("isDoctor","1");
 
                             documentReference.set(doctor).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
@@ -171,7 +172,7 @@ public class RegisterDoctor extends AppCompatActivity {
                                 }
                             });
 
-                            startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                            startActivity(new Intent(getApplicationContext(),Doctor_dashboard.class));
 
                         }
                         else{
