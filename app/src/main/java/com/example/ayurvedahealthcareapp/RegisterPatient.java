@@ -134,6 +134,7 @@ public class RegisterPatient extends AppCompatActivity {
                             user.put("email",email);
                             user.put("phone",phone);
                             user.put("isPatient","1");
+                            user.put("pUrl","https://firebasestorage.googleapis.com/v0/b/ayurveda-health-care-app.appspot.com/o/profile.png?alt=media&token=02b49adf-c9b7-4500-83ff-562177cec567");
 
                             documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
