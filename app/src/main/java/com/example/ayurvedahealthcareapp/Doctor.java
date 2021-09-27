@@ -1,11 +1,46 @@
 package com.example.ayurvedahealthcareapp;
 
-public class Doctor {
+import android.os.Parcel;
+import android.os.Parcelable;
 
-    private String fName,birthDate, email,phone, NIC,Registration_ID, pUrl;
+public class Doctor implements Parcelable {
+
+    private String fName,birthDate, email,phone, NIC,Registration_ID, pUrl,DoctorId;
     private long rating;
 
     public Doctor() {
+    }
+
+    protected Doctor(Parcel in) {
+        fName = in.readString();
+        birthDate = in.readString();
+        email = in.readString();
+        phone = in.readString();
+        NIC = in.readString();
+        Registration_ID = in.readString();
+        pUrl = in.readString();
+        DoctorId = in.readString();
+        rating = in.readLong();
+    }
+
+    public static final Creator<Doctor> CREATOR = new Creator<Doctor>() {
+        @Override
+        public Doctor createFromParcel(Parcel in) {
+            return new Doctor(in);
+        }
+
+        @Override
+        public Doctor[] newArray(int size) {
+            return new Doctor[size];
+        }
+    };
+
+    public String getDoctorId() {
+        return DoctorId;
+    }
+
+    public void setDoctorId(String doctorId) {
+        DoctorId = doctorId;
     }
 
     public String getpUrl() {
@@ -70,5 +105,23 @@ public class Doctor {
 
     public void setRating(long rating) {
         this.rating = rating;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(fName);
+        dest.writeString(birthDate);
+        dest.writeString(email);
+        dest.writeString(phone);
+        dest.writeString(NIC);
+        dest.writeString(Registration_ID);
+        dest.writeString(pUrl);
+        dest.writeString(DoctorId);
+        dest.writeLong(rating);
     }
 }

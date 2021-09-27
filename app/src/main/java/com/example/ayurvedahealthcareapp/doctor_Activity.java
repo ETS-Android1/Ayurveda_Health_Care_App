@@ -1,54 +1,109 @@
 package com.example.ayurvedahealthcareapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.SearchView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
 
 public class doctor_Activity extends AppCompatActivity {
 
+    private static final String TAG ="TAG" ;
+    LocalBroadcastManager localBroadcastManager;
+
     private RecyclerView recyclerView;
-    FirebaseAuth fAuth;
-    FirebaseFirestore fStore;
+
     DoctorAdapter doctorAdapter;
+    CollectionReference doctorRef;
+    private static Doctor currentDoctor;
+
+    ArrayList<Doctor> doctors;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_);
 
-        fAuth           = FirebaseAuth.getInstance();
-        fStore          = FirebaseFirestore.getInstance();
-
+        localBroadcastManager = LocalBroadcastManager.getInstance(this);
         recyclerView = findViewById(R.id.recycler_doctor);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        doctorRef = FirebaseFirestore.getInstance().collection("Users");
+        doctors= new ArrayList<>();
 
-        FirestoreRecyclerOptions<Doctor> options = new FirestoreRecyclerOptions.Builder<Doctor>()
-                .setQuery(FirebaseFirestore.getInstance().collection("Users").whereEqualTo("isDoctor","1"), Doctor.class)
-                .build();
+        doctorRef.whereEqualTo("isDoctor","1").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
-        doctorAdapter = new DoctorAdapter(options);
+                for(QueryDocumentSnapshot doctorSnapshot:task.getResult()){
+                    Doctor doctor = doctorSnapshot.toObject(Doctor.class);
+                    doctor.setDoctorId(doctorSnapshot.getId());
+
+                    doctors.add(doctor);
+                }
+                doctorAdapter.notifyDataSetChanged();
+                Intent intent = new Intent("Doctor Loading finished");
+                intent.putParcelableArrayListExtra("Doctor Loading finished",doctors);
+                localBroadcastManager.sendBroadcast(intent);
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d(TAG, "onFailure: "+e.toString());
+            }
+        });
+
+        doctorAdapter = new DoctorAdapter(this,doctors);
         recyclerView.setAdapter(doctorAdapter);
+
+
     }
 
     @Override
-    protected void onStart()
-    {
-        super.onStart();
-        doctorAdapter.startListening();
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.searchmenu,menu);
+
+        MenuItem menuItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) menuItem.getActionView();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                doctorAdapter.getFilter().filter(newText);
+                return true;
+            }
+        });
+
+        return true;
     }
 
-    @Override
-    protected void onStop()
-    {
-        super.onStop();
-        doctorAdapter.stopListening();
-    }
+
 }
