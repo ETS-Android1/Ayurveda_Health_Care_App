@@ -1,6 +1,7 @@
 package com.example.ayurvedahealthcareapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,11 +31,14 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.docotorVie
     List<Doctor> doctorList;
     List<Doctor> doctorListFull;
     List<CardView> cardViewList;
+    LocalBroadcastManager localBroadcastManager;
 
     public DoctorAdapter(Context context, List<Doctor> doctorList) {
         this.context = context;
         this.doctorList = doctorList;
-        this.doctorListFull = new ArrayList<>(doctorList);
+        doctorListFull = new ArrayList<>(doctorList);
+        cardViewList = new ArrayList<>();
+        localBroadcastManager = LocalBroadcastManager.getInstance(context);
     }
 
     @NonNull
@@ -51,9 +55,25 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.docotorVie
         holder.rate.setRating((float)doctorList.get(position).getRating());
         Glide.with(holder.img.getContext()).load(doctorList.get(position).getpUrl()).into(holder.img);
 
-        /*if(!cardViewList.contains(holder.cardView)){
+        if(!cardViewList.contains(holder.cardView)){
             cardViewList.add(holder.cardView);
-        }*/
+        }
+
+        holder.setiRecyclerItemSelectedListener(new IRecyclerItemSelectedListener() {
+            @Override
+            public void onItemSelectedListener(View view, int pos) {
+                holder.cardView.setCardBackgroundColor(context.getResources().getColor(android.R.color.holo_green_light));
+
+                Intent intent = new Intent("Doctor Loading finished");
+                intent.putExtra("Doctor Selected",doctorList.get(pos));
+                localBroadcastManager.sendBroadcast(intent);
+
+                Context context = view.getContext();
+                Intent intent2 = new Intent(context,Booking.class);
+                context.startActivity(intent2);
+
+            }
+        });
     }
 
     @Override
@@ -67,13 +87,18 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.docotorVie
     }
 
 
-    class docotorViewholder extends RecyclerView.ViewHolder{
+    class docotorViewholder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         ImageView img;
         TextView dName,phone;
         RatingBar rate;
         CardView cardView;
 
+        IRecyclerItemSelectedListener iRecyclerItemSelectedListener;
+
+        public void setiRecyclerItemSelectedListener(IRecyclerItemSelectedListener iRecyclerItemSelectedListener) {
+            this.iRecyclerItemSelectedListener = iRecyclerItemSelectedListener;
+        }
 
         public docotorViewholder(@NonNull View itemView) {
             super(itemView);
@@ -83,6 +108,13 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.docotorVie
             phone = (TextView)itemView.findViewById(R.id.phoneNum);
             rate = (RatingBar)itemView.findViewById(R.id.doc_rating);
             cardView = itemView.findViewById(R.id.doc_card);
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            iRecyclerItemSelectedListener.onItemSelectedListener(v,getAdapterPosition());
         }
     }
 
@@ -92,7 +124,7 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.docotorVie
         protected FilterResults performFiltering(CharSequence constraint) {
             List<Doctor> filteredList =  new ArrayList<>();
 
-            if(constraint == null || constraint.length() == 0){
+            if(constraint.toString() == null || constraint.toString().length() == 0){
                 filteredList.addAll(doctorListFull);
             }
             else {
@@ -104,15 +136,17 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.docotorVie
                     }
                 }
             }
-            FilterResults filterResults = new FilterResults();
-            filterResults.values = filteredList;
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
 
-            return filterResults;
+            return results;
         }
 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            doctorList.addAll((List)results.values);
+
+            doctorList.clear();
+            doctorList.addAll((List) results.values);
             notifyDataSetChanged();
         }
 

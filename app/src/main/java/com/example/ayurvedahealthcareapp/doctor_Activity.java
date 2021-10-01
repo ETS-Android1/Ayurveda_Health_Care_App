@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.inputmethod.EditorInfo;
 import android.widget.SearchView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -88,20 +89,22 @@ public class doctor_Activity extends AppCompatActivity {
 
         MenuItem menuItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) menuItem.getActionView();
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                Log.d("newText1",query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                Log.d("newText",newText);
                 doctorAdapter.getFilter().filter(newText);
-                return true;
+                return false;
             }
         });
-
         return true;
     }
 
