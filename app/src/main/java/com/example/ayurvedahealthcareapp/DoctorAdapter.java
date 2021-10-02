@@ -64,12 +64,11 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.docotorVie
             public void onItemSelectedListener(View view, int pos) {
                 holder.cardView.setCardBackgroundColor(context.getResources().getColor(android.R.color.holo_green_light));
 
-                Intent intent = new Intent("Doctor Loading finished");
-                intent.putExtra("Doctor Selected",doctorList.get(pos));
-                localBroadcastManager.sendBroadcast(intent);
-
                 Context context = view.getContext();
+
                 Intent intent2 = new Intent(context,Booking.class);
+                intent2.putExtra("Doctor Selected",doctorList.get(pos).getDoctorId());
+                localBroadcastManager.sendBroadcast(intent2);
                 context.startActivity(intent2);
 
             }
@@ -114,7 +113,7 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.docotorVie
 
         @Override
         public void onClick(View v) {
-            iRecyclerItemSelectedListener.onItemSelectedListener(v,getAdapterPosition());
+            iRecyclerItemSelectedListener.onItemSelectedListener(v,getBindingAdapterPosition());
         }
     }
 

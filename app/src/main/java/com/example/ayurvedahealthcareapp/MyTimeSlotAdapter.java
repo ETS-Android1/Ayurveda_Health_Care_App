@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MyTimeSlotAdapter extends RecyclerView.Adapter<MyTimeSlotAdapter.MyViewHolder> {
@@ -21,6 +22,11 @@ public class MyTimeSlotAdapter extends RecyclerView.Adapter<MyTimeSlotAdapter.My
     public MyTimeSlotAdapter(Context context, List<TimeSlot> timeSlotList) {
         this.context = context;
         this.timeSlotList = timeSlotList;
+    }
+
+    public MyTimeSlotAdapter(Context context) {
+        this.context = context;
+        this.timeSlotList = new ArrayList<>();
     }
 
     @NonNull
@@ -35,10 +41,11 @@ public class MyTimeSlotAdapter extends RecyclerView.Adapter<MyTimeSlotAdapter.My
         holder.time_slot.setText(new StringBuilder(convertTimeSlotToString(position)).toString());
         //if all slots available show the list
         if(timeSlotList.size() == 0){
-            holder.time_slot_text.setText("Available");
-            holder.time_slot_text.setTextColor(context.getResources().getColor(android.R.color.black));
-            holder.time_slot.setTextColor(context.getResources().getColor(android.R.color.black));
             holder.card_time_slot.setCardBackgroundColor(context.getResources().getColor(android.R.color.white));
+            holder.time_slot_text.setText("Available");
+            holder.time_slot_text.setTextColor(Color.parseColor("#299125"));
+            holder.time_slot.setTextColor(context.getResources().getColor(android.R.color.black));
+
         }
         else {
             for(TimeSlot slotValue:timeSlotList){
