@@ -3,6 +3,7 @@ package com.example.ayurvedahealthcareapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,8 +12,14 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Space;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -39,16 +46,23 @@ public class Booking extends AppCompatActivity implements ITimeSlotListener {
     DocumentReference doctorDoc;
     ITimeSlotListener iTimeSlotListener;
 
-    Calendar selected_date;
     LocalBroadcastManager localBroadcastManager;
     private RecyclerView recyclerView;
+    MyTimeSlotAdapter  adapter;
+
     HorizontalCalendarView calendarView;
     SimpleDateFormat simpleDateFormat;
-    private String receiveDoctor;
+    public static Calendar selected_date;
+
+    public static String receiveDoctorID;
+    public static String receiveDoctorName;
+
+
 
     BroadcastReceiver displayTimeSlot = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+
             Calendar date = Calendar.getInstance();
             date.add(Calendar.DATE,0);
             loadAvailableTimeSlotOfDoctor("Doctor Selected",simpleDateFormat.format(date.getTime()));
@@ -58,9 +72,10 @@ public class Booking extends AppCompatActivity implements ITimeSlotListener {
 
     private void loadAvailableTimeSlotOfDoctor(String doctorId, final String bookDate) {
 
-        receiveDoctor = getIntent().getExtras().get("Doctor Selected").toString();
+        receiveDoctorID = getIntent().getExtras().get("Doctor Selected").toString();
+        receiveDoctorName = getIntent().getExtras().get("Doctor Name").toString();
 
-        doctorDoc = FirebaseFirestore.getInstance().collection("Users").document(receiveDoctor);
+        doctorDoc = FirebaseFirestore.getInstance().collection("Users").document(receiveDoctorID);
 
         doctorDoc.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -69,7 +84,7 @@ public class Booking extends AppCompatActivity implements ITimeSlotListener {
                     DocumentSnapshot documentSnapshot = task.getResult();
                     if(documentSnapshot.exists()){
 
-                        CollectionReference date = FirebaseFirestore.getInstance().collection("Users").document(receiveDoctor)
+                        CollectionReference date = FirebaseFirestore.getInstance().collection("Users").document(receiveDoctorID)
                                 .collection(bookDate);
 
                         date.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -87,6 +102,7 @@ public class Booking extends AppCompatActivity implements ITimeSlotListener {
                                             timeSlots.add(document.toObject(TimeSlot.class));
                                         }
                                         iTimeSlotListener.onTimeSlotLoadSuccess(timeSlots);
+
                                     }
                                 }
                             }
@@ -101,6 +117,31 @@ public class Booking extends AppCompatActivity implements ITimeSlotListener {
             }
         });
     }
+
+    /*private void showSuccessDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(Booking.this);
+        View view = LayoutInflater.from(Booking.this).inflate(R.layout.layout_success_dialog,
+                (ConstraintLayout)findViewById(R.id.layoutDialogContainer));
+        builder.setView(view);
+
+        ((TextView) view.findViewById(R.id.booked_time))
+                .setText(adapter.convertTimeSlotToString(time));
+        final Button okay = (Button) view.findViewById(R.id.buttonAction);
+
+        final AlertDialog alertDialog = builder.create();
+        view.findViewById(R.id.buttonAction).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+                startActivity(new Intent(getApplicationContext(), Dashboard.class));
+                finish();
+            }
+        });
+        if (alertDialog.getWindow() != null){
+            alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+        }
+        alertDialog.show();
+    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -161,7 +202,7 @@ public class Booking extends AppCompatActivity implements ITimeSlotListener {
 
     @Override
     public void onTimeSlotLoadFailed(String msg) {
-        Toast.makeText(Booking.this, "Logged in successfully", Toast.LENGTH_SHORT).show();
+        Toast.makeText(Booking.this, msg, Toast.LENGTH_SHORT).show();
 
     }
 

@@ -10,4 +10,5 @@
     <color name="LightYellow">#CDDC39</color>
     <color name="backgroundColor">#f4fef5</color>
     <color name="profile">#a6feb1</color>
+    <color name="colorSuccess">#62BD69</color>
 </resources>

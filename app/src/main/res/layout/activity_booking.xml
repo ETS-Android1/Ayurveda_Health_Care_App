@@ -33,19 +33,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-        <Button
-            android:id="@+id/next"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginEnd="4dp"
-            android:backgroundTint="#299125"
-            android:enabled="false"
-            android:text="Next"
-            android:textColor="#FFFFFF"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
     </LinearLayout>
 
 </ScrollView >
