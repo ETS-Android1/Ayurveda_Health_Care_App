@@ -6,14 +6,92 @@
     android:layout_height="match_parent"
     tools:context=".calender_Activity">
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_booking_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:visibility="gone"
+        android:background="@color/profile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_baseline_calendar_today_24"
+                android:text="Your Appointment Details"
+                android:textSize="20dp"
+                android:textColor="#285C02"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/calendar_drName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:drawableStart="@drawable/ic_baseline_person_outline_24"
+                android:text="Dr. Name"
+                android:textAlignment="center"
+                android:textColor="#285C02"
+                android:textSize="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textView12" />
+
+
+            <TextView
+                android:id="@+id/calendar_booked_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:drawableStart="@drawable/ic_baseline_calendar_today_24"
+                android:text="Time!"
+                android:textAlignment="center"
+                android:textColor="#285C02"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/calendar_drName" />
+
+            <TextView
+                android:id="@+id/calendar_remaining_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:drawableStart="@drawable/ic_baseline_access_time_24"
+                android:text="Remaining Time!"
+                android:textAlignment="center"
+                android:textColor="#285C02"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/calendar_booked_time" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
     <TextView
-        android:id="@+id/textView12"
+        android:id="@+id/textnothing"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="CalenderHere"
-        android:textSize="36sp"
+        android:text="You have No Appointments"
+        android:textSize="20dp"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

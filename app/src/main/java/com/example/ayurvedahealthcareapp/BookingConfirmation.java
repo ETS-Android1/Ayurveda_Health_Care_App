@@ -10,12 +10,17 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -28,7 +33,8 @@ public class BookingConfirmation extends AppCompatActivity {
 
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
-    String userId,patientName,patientPhone;
+    String userId,patientName;
+    public static String patientPhone;
 
     public static int time;
 
@@ -53,7 +59,6 @@ public class BookingConfirmation extends AppCompatActivity {
         userId      = fAuth.getCurrentUser().getUid();
 
         //set the texts
-
         drName.setText(Booking.receiveDoctorName);
         bookDate.setText(simpleDateFormat.format(Booking.selected_date.getTime()));
         bookTime.setText(convertTimeSlotToString(time));
@@ -75,14 +80,33 @@ public class BookingConfirmation extends AppCompatActivity {
         okay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                String startTime = convertTimeSlotToString(time);
+                String[] convertTime = startTime.split("-");
+                //getting start time
+                String[] startTimeConvert = convertTime[0].split("[.]");
+                int startHourInt = Integer.parseInt(startTimeConvert[0].trim());
+                int startMinInt = Integer.parseInt(startTimeConvert[1].trim());
+
+                Calendar bookingDateWithoutHour = Calendar.getInstance();
+                bookingDateWithoutHour.setTimeInMillis(Booking.selected_date.getTimeInMillis());
+                bookingDateWithoutHour.set(Calendar.HOUR_OF_DAY, startHourInt);
+                bookingDateWithoutHour.set(Calendar.MINUTE, startMinInt);
+
+                Timestamp timestamp = new Timestamp(bookingDateWithoutHour.getTime());
+
                 BookingInformation bookingInformation = new BookingInformation();
 
+                bookingInformation.setTimestamp(timestamp);
+                bookingInformation.setDone(false); //always false
                 bookingInformation.setDoctorId(Booking.receiveDoctorID);
                 bookingInformation.setDoctorName(Booking.receiveDoctorName);
                 bookingInformation.setPatientName(patientName);
                 bookingInformation.setPatientPhone(patientPhone);
                 bookingInformation.setSlot(Long.valueOf(time));
-                bookingInformation.setTime(simpleDateFormat.format(Booking.selected_date.getTime()));
+                bookingInformation.setTime(String.valueOf(new StringBuilder(convertTimeSlotToString(time))
+                .append(" at ")
+                .append(simpleDateFormat.format(Booking.selected_date.getTime()))));
 
                 DocumentReference bookingDate = fStore.collection("Users").document(Booking.receiveDoctorID)
                         .collection(new SimpleDateFormat("dd_MM_yyyy").format(Booking.selected_date.getTime()))
@@ -91,9 +115,9 @@ public class BookingConfirmation extends AppCompatActivity {
                 bookingDate.set(bookingInformation).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        resetStaticData();
-                        startActivity(new Intent(getApplicationContext(), Dashboard.class));
-                        Toast.makeText(BookingConfirmation.this, "Appointment is Successful!", Toast.LENGTH_SHORT).show();
+
+                        // If already exists a booking prevent a new one
+                        addToUserBooking(bookingInformation);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -114,6 +138,50 @@ public class BookingConfirmation extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void addToUserBooking(BookingInformation bookingInformation) {
+
+
+        final CollectionReference userBooking = fStore.collection("Patients")
+                .document(patientPhone).collection("Booking");
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE,0);
+        calendar.set(Calendar.HOUR_OF_DAY,0);
+        calendar.set(Calendar.MINUTE,0);
+
+        Timestamp toDayTimeStamp = new Timestamp(calendar.getTime());
+
+        userBooking.whereGreaterThanOrEqualTo("timestamp",toDayTimeStamp).whereEqualTo("done",false)
+                .limit(1).get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.getResult().isEmpty())
+                        {
+                            userBooking.document().set(bookingInformation)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            resetStaticData();
+                                            startActivity(new Intent(getApplicationContext(), Dashboard.class));
+                                            Toast.makeText(BookingConfirmation.this, "Appointment is Successful!", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(BookingConfirmation.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                        else {
+                            resetStaticData();
+                            startActivity(new Intent(getApplicationContext(), Dashboard.class));
+                            Toast.makeText(BookingConfirmation.this, "Appointment is Successful!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 
     private void resetStaticData() {

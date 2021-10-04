@@ -82,8 +82,8 @@
                         android:layout_below="@id/bus"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
-                        android:text="Calender"
-                        android:textSize="24sp"
+                        android:text="Appointments"
+                        android:textSize="20sp"
                         app:fontFamily="@font/aclonica" />
 
                     <ImageView
