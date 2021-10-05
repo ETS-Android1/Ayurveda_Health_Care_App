@@ -44,19 +44,21 @@ public class home_remidies_Activity extends AppCompatActivity {
                         getString(R.string.new_6),
                         getString(R.string.new_7),
                         getString(R.string.new_8),
+                        "Anger depression forgetfullness",
 
 
 
                 };
         imageResourceId=new int[]{
-                R.drawable.apple,
-                R.drawable.avacado,
-                R.drawable.cherry,
-                R.drawable.mango,
-                R.drawable.passion,
-                R.drawable.pearss,
-                R.drawable.orange,
-                R.drawable.banana
+                R.drawable.fever,
+                R.drawable.handlegs,
+                R.drawable.nails,
+                R.drawable.legs,
+                R.drawable.skin1,
+                R.drawable.skin2,
+                R.drawable.skin3,
+                R.drawable.chestpain,
+                R.drawable.mentalhealth
 
         };
         getData();
