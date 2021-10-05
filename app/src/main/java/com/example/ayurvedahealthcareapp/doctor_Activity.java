@@ -36,7 +36,6 @@ public class doctor_Activity extends AppCompatActivity {
 
     DoctorAdapter doctorAdapter;
     CollectionReference doctorRef;
-    private static Doctor currentDoctor;
 
     ArrayList<Doctor> doctors;
 

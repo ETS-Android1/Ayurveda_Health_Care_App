@@ -34,9 +34,8 @@ public class BookingConfirmation extends AppCompatActivity {
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String userId,patientName;
-    public static String patientPhone;
+    String patientPhone;
 
-    public static int time;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +43,6 @@ public class BookingConfirmation extends AppCompatActivity {
         setContentView(R.layout.activity_booking_confirmation);
 
         simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-
-        time = (int) getIntent().getExtras().get("Time Slot");
 
         drName = findViewById(R.id.drName);
         bookTime = findViewById(R.id.booked_time);
@@ -59,9 +56,9 @@ public class BookingConfirmation extends AppCompatActivity {
         userId      = fAuth.getCurrentUser().getUid();
 
         //set the texts
-        drName.setText(Booking.receiveDoctorName);
+        drName.setText(CommonValues.currentDoctor.getfName());
         bookDate.setText(simpleDateFormat.format(Booking.selected_date.getTime()));
-        bookTime.setText(convertTimeSlotToString(time));
+        bookTime.setText(convertTimeSlotToString(CommonValues.currentTimeSlot));
 
 
 
@@ -81,7 +78,7 @@ public class BookingConfirmation extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String startTime = convertTimeSlotToString(time);
+                String startTime = convertTimeSlotToString(CommonValues.currentTimeSlot);
                 String[] convertTime = startTime.split("-");
                 //getting start time
                 String[] startTimeConvert = convertTime[0].split("[.]");
@@ -99,18 +96,18 @@ public class BookingConfirmation extends AppCompatActivity {
 
                 bookingInformation.setTimestamp(timestamp);
                 bookingInformation.setDone(false); //always false
-                bookingInformation.setDoctorId(Booking.receiveDoctorID);
-                bookingInformation.setDoctorName(Booking.receiveDoctorName);
+                bookingInformation.setDoctorId(CommonValues.currentDoctor.getDoctorId());
+                bookingInformation.setDoctorName(CommonValues.currentDoctor.getfName());
                 bookingInformation.setPatientName(patientName);
                 bookingInformation.setPatientPhone(patientPhone);
-                bookingInformation.setSlot(Long.valueOf(time));
-                bookingInformation.setTime(String.valueOf(new StringBuilder(convertTimeSlotToString(time))
+                bookingInformation.setSlot(Long.valueOf(CommonValues.currentTimeSlot));
+                bookingInformation.setTime(String.valueOf(new StringBuilder(convertTimeSlotToString(CommonValues.currentTimeSlot))
                 .append(" at ")
                 .append(simpleDateFormat.format(Booking.selected_date.getTime()))));
 
-                DocumentReference bookingDate = fStore.collection("Users").document(Booking.receiveDoctorID)
+                DocumentReference bookingDate = fStore.collection("Users").document(CommonValues.currentDoctor.getDoctorId())
                         .collection(new SimpleDateFormat("dd_MM_yyyy").format(Booking.selected_date.getTime()))
-                        .document(String.valueOf(time));
+                        .document(String.valueOf(CommonValues.currentTimeSlot));
 
                 bookingDate.set(bookingInformation).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -185,9 +182,9 @@ public class BookingConfirmation extends AppCompatActivity {
     }
 
     private void resetStaticData() {
-        Booking.receiveDoctorName = null;
-        Booking.receiveDoctorID = null;
-        time = -1;
+
+        CommonValues.currentDoctor = null;
+        CommonValues.currentTimeSlot= -1;
         Booking.selected_date.add(Calendar.DATE,0);
     }
 

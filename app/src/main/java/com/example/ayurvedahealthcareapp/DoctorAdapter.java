@@ -68,6 +68,7 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.docotorVie
 
                 Intent intent2 = new Intent(context,Booking.class);
                 intent2.putExtra("Doctor Selected",doctorList.get(pos).getDoctorId());
+                CommonValues.currentDoctor = doctorList.get(pos);
                 intent2.putExtra("Doctor Name",doctorList.get(pos).getfName());
                 localBroadcastManager.sendBroadcast(intent2);
                 context.startActivity(intent2);

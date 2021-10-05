@@ -91,6 +91,7 @@ public class MyTimeSlotAdapter extends RecyclerView.Adapter<MyTimeSlotAdapter.My
 
                 Intent intent = new Intent(context,BookingConfirmation.class);
                 intent.putExtra("Time Slot",pos);
+                CommonValues.currentTimeSlot = pos;
                 localBroadcastManager.sendBroadcast(intent);
                 context.startActivity(intent);
                 /*holder.next.setEnabled(true);

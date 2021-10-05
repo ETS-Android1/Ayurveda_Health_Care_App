@@ -48,7 +48,6 @@ public class Booking extends AppCompatActivity implements ITimeSlotListener {
 
     LocalBroadcastManager localBroadcastManager;
     private RecyclerView recyclerView;
-    MyTimeSlotAdapter  adapter;
 
     HorizontalCalendarView calendarView;
     SimpleDateFormat simpleDateFormat;
@@ -75,7 +74,7 @@ public class Booking extends AppCompatActivity implements ITimeSlotListener {
         receiveDoctorID = getIntent().getExtras().get("Doctor Selected").toString();
         receiveDoctorName = getIntent().getExtras().get("Doctor Name").toString();
 
-        doctorDoc = FirebaseFirestore.getInstance().collection("Users").document(receiveDoctorID);
+        doctorDoc = FirebaseFirestore.getInstance().collection("Users").document(CommonValues.currentDoctor.getDoctorId());
 
         doctorDoc.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -84,7 +83,7 @@ public class Booking extends AppCompatActivity implements ITimeSlotListener {
                     DocumentSnapshot documentSnapshot = task.getResult();
                     if(documentSnapshot.exists()){
 
-                        CollectionReference date = FirebaseFirestore.getInstance().collection("Users").document(receiveDoctorID)
+                        CollectionReference date = FirebaseFirestore.getInstance().collection("Users").document(CommonValues.currentDoctor.getDoctorId())
                                 .collection(bookDate);
 
                         date.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
