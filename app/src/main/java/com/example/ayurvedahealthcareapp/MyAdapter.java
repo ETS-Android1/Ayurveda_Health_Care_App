@@ -5,7 +5,9 @@ import android.content.Context;
         import android.view.LayoutInflater;
         import android.view.View;
         import android.view.ViewGroup;
-        import android.widget.ImageView;
+import android.widget.Filter;
+import android.widget.Filterable;
+import android.widget.ImageView;
         import android.widget.TextView;
 
         import androidx.annotation.NonNull;
@@ -14,13 +16,15 @@ import android.content.Context;
 
         import java.util.ArrayList;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
+public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> implements Filterable {
     Context context;
     ArrayList<News> newsArrayList;
+    ArrayList<News> newsArrayListFull;
 
     public MyAdapter(Context context, ArrayList<News> newsArrayList) {
         this.context = context;
-        this.newsArrayList = newsArrayList;
+        this.newsArrayListFull = newsArrayList;
+        this.newsArrayList=new ArrayList<>(newsArrayListFull);
     }
 
     @NonNull
@@ -45,6 +49,47 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     public int getItemCount() {
         return newsArrayList.size();
     }
+
+    @Override
+    public Filter getFilter() {
+        return newsFilter;
+    }
+    public  final Filter newsFilter = new Filter(){
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            ArrayList<News> filteredNewsList=new ArrayList<>();
+
+            if(constraint==null || constraint.length()==0)
+            {
+                filteredNewsList.addAll(newsArrayListFull);
+            }
+            else
+            {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+                for (News news : newsArrayListFull)
+                {
+                    if(news.heading.toLowerCase().contains(filterPattern))
+                        filteredNewsList.add(news);
+
+                }
+            }
+            FilterResults results =new FilterResults();
+            results.values=filteredNewsList;
+            results.count=filteredNewsList.size();
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            newsArrayList.clear();
+            newsArrayList.addAll((ArrayList)results.values);
+            notifyDataSetChanged();
+
+        }
+    };
+
+
     public  class MyViewHolder extends RecyclerView.ViewHolder{
         TextView tvHeading;
         TextView briefNews;

@@ -7,8 +7,11 @@ import androidx.appcompat.app.AppCompatActivity;
         import androidx.recyclerview.widget.RecyclerView;
 
         import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.SearchView;
 
-        import java.util.ArrayList;
+import java.util.ArrayList;
 
 public class home_remidies_Activity extends AppCompatActivity {
     RecyclerView recyclerView;
@@ -28,11 +31,11 @@ public class home_remidies_Activity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
 
         newsArrayList =new ArrayList<News>();
-        myAdapter=new MyAdapter(this,newsArrayList);
-        recyclerView.setAdapter(myAdapter);
+
+
         newsHeading=new String[]{
-                "geigdowiheohoeihfepojfeop","ihwiuchewiuchwihcihw","iudgwiuwuhoiwhcoiwhon","biuebvebvu","coniovcnoe","oneocinoimvemnvnnonnnmcowe","cenoinbbiecbncweic"
-                ,"dioniviio"
+                "Chronic Fever:  Fever until 21 days and temperature does not become normal","Thigh pain: Pain in the muscles of thighs because of different reasons as by lifting heavy weight, cycling and running. SWEAT IN HAND AND FEET","Nails Problems: nails have moved on, Nails Itching, Nails wound,  corner of the nails of the finger due to inflammation, Inflammation of hands and feet,  Inflammation in feet soles","Problems in Legs: Decomposition of feet finger, Feet Ringworm","MRSA (methicillin resistant staphylococcus aureus)","BURNS:Burns are among the most common household injuries, especially in children","Chest Pain: RIB The veins become tight due to check phlegm in the lungs because of that patient suffer from ribs pain. PNEUMONIA"
+                ,"Anger,  depression, Forgetfullness"
         };
         briefNews=new String[]
                 {
@@ -71,7 +74,33 @@ public class home_remidies_Activity extends AppCompatActivity {
             newsArrayList.add(news);
 
         }
+        myAdapter=new MyAdapter(this,newsArrayList);
+        recyclerView.setAdapter(myAdapter);
+
         myAdapter.notifyDataSetChanged();
 
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.remidy_menu_item,menu);
+        MenuItem menuItem=menu.findItem(R.id.search_action);
+        SearchView searchView=(SearchView)menuItem.getActionView();
+
+        searchView.setMaxWidth(Integer.MAX_VALUE);
+        searchView.setQueryHint("Search Here !");
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                myAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+        return super.onCreateOptionsMenu(menu);
     }
 }
