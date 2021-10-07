@@ -34,7 +34,7 @@ public class home_remidies_Activity extends AppCompatActivity {
 
 
         newsHeading=new String[]{
-                "Chronic Fever:  Fever until 21 days and temperature does not become normal","Thigh pain: Pain in the muscles of thighs because of different reasons as by lifting heavy weight, cycling and running. SWEAT IN HAND AND FEET","Nails Problems: nails have moved on, Nails Itching, Nails wound,  corner of the nails of the finger due to inflammation, Inflammation of hands and feet,  Inflammation in feet soles","Problems in Legs: Decomposition of feet finger, Feet Ringworm","MRSA (methicillin resistant staphylococcus aureus)","BURNS:Burns are among the most common household injuries, especially in children","Chest Pain: RIB The veins become tight due to check phlegm in the lungs because of that patient suffer from ribs pain. PNEUMONIA"
+                "Chronic Fever ","Thigh pain "," cycling and running. SWEAT IN HAND AND FEET","Nails Problems: nails have moved on, Nails Itching, Nails wound,  corner of the nails of the finger due to inflammation, Inflammation of hands and feet,  Inflammation in feet soles","Problems in Legs: Decomposition of feet finger, Feet Ringworm","MRSA (methicillin resistant staphylococcus aureus)","BURNS:Burns are among the most common household injuries, especially in children","Chest Pain: RIB The veins become tight due to check phlegm in the lungs because of that patient suffer from ribs pain. PNEUMONIA"
                 ,"Anger,  depression, Forgetfullness"
         };
         briefNews=new String[]
