@@ -9,7 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="LightYellow">#CDDC39</color>
     <color name="backgroundColor">#f4fef5</color>
-    <color name="profile">#a6feb1</color>
+    <color name="profile">#70E47E</color>
     <color name="colorSuccess">#62BD69</color>
-    <color name="underline">#D8D6</color>
+    <color name="underline">#DD090909</color>
 </resources>
