@@ -5,13 +5,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,32 +19,24 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.EmailAuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MainActivity extends AppCompatActivity {
+public class ProfileDoctor extends AppCompatActivity {
 
     public static final String TAG = "TAG";
-    TextView fullName, email, phone, birthDate;
+    TextView fullName, email, phone, birthDate,nic;
     Button changePassword, changeProPic;
     CircleImageView profileImage;
     FirebaseAuth fAuth;
@@ -57,16 +47,16 @@ public class MainActivity extends AppCompatActivity {
 
     StorageReference storageReference;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_profile_doctor);
 
         fullName    = findViewById(R.id.fullName);
         email       = findViewById(R.id.Email);
         phone       = findViewById(R.id.phone);
         birthDate   = findViewById(R.id.birthDate);
+        nic   = findViewById(R.id.Dnic);
         changePassword  = findViewById(R.id.changePassword);
         changeProPic= findViewById(R.id.changeProPic);
 
@@ -94,63 +84,64 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
 
-                    phone.setText(documentSnapshot.getString("phone"));
-                    fullName.setText(documentSnapshot.getString("fName"));
-                    email.setText(documentSnapshot.getString("email"));
-                    birthDate.setText(documentSnapshot.getString("birthDate"));
+                phone.setText(documentSnapshot.getString("phone"));
+                fullName.setText(documentSnapshot.getString("fName"));
+                email.setText(documentSnapshot.getString("email"));
+                birthDate.setText(documentSnapshot.getString("birthDate"));
+                nic.setText(documentSnapshot.getString("NIC"));
 
             }
         });
 
 
 
-            //Change password
-            changePassword.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+        //Change password
+        changePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-                    final View customLayout = getLayoutInflater().inflate(R.layout.change_password, null);
-                    EditText cPassword = customLayout.findViewById(R.id.currentPassword);
-                    EditText nPassword = customLayout.findViewById(R.id.newPassword);
-                    Button updatePassword = customLayout.findViewById(R.id.updatePassword);
+                final View customLayout = getLayoutInflater().inflate(R.layout.change_password, null);
+                EditText cPassword = customLayout.findViewById(R.id.currentPassword);
+                EditText nPassword = customLayout.findViewById(R.id.newPassword);
+                Button updatePassword = customLayout.findViewById(R.id.updatePassword);
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                    builder.setView(customLayout);
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                builder.setView(customLayout);
 
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
+                AlertDialog dialog = builder.create();
+                dialog.show();
 
-                    updatePassword.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
+                updatePassword.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
 
-                            String oldPassword = cPassword.getText().toString().trim();
-                            String newPassword = nPassword.getText().toString().trim();
+                        String oldPassword = cPassword.getText().toString().trim();
+                        String newPassword = nPassword.getText().toString().trim();
 
-                            if(TextUtils.isEmpty(oldPassword)){
-                                Toast.makeText(MainActivity.this, "Please Enter your current password!", Toast.LENGTH_SHORT).show();
-                            }
-                            if(newPassword.length()<6){
-                                Toast.makeText(MainActivity.this, "Password must be at least 6 characters long!", Toast.LENGTH_SHORT).show();
-                            }
-
-                            dialog.dismiss();
-                            updatePassword(oldPassword,newPassword);
+                        if(TextUtils.isEmpty(oldPassword)){
+                            Toast.makeText(ProfileDoctor.this, "Please Enter your current password!", Toast.LENGTH_SHORT).show();
                         }
-                    });
-                }
-            });
+                        if(newPassword.length()<6){
+                            Toast.makeText(ProfileDoctor.this, "Password must be at least 6 characters long!", Toast.LENGTH_SHORT).show();
+                        }
+
+                        dialog.dismiss();
+                        updatePassword(oldPassword,newPassword);
+                    }
+                });
+            }
+        });
 
 
-            //Change profile picture
-            changeProPic.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    CropImage.activity().setAspectRatio(1,1).start(MainActivity.this);
-                }
-            });
+        //Change profile picture
+        changeProPic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CropImage.activity().setAspectRatio(1,1).start(ProfileDoctor.this);
+            }
+        });
 
-        }
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -165,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
             uploadImageToFirebase(imageUri);
         }
         else{
-            Toast.makeText(MainActivity.this,"Error!!, Please try again.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ProfileDoctor.this,"Error!!, Please try again.", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -202,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(MainActivity.this,"Error!!" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(ProfileDoctor.this,"Error!!" + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -220,19 +211,19 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Void aVoid) {
                         //Successfully changed the password
-                        Toast.makeText(MainActivity.this, "Password Updated", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ProfileDoctor.this, "Password Updated", Toast.LENGTH_SHORT).show();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(MainActivity.this,"Error!!" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ProfileDoctor.this,"Error!!" + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(MainActivity.this,"Error!!" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(ProfileDoctor.this,"Error!!" + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -247,7 +238,7 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed()
     {
         super.onBackPressed();
-        startActivity(new Intent(getApplicationContext(), Dashboard.class));
+        startActivity(new Intent(getApplicationContext(), Doctor_dashboard.class));
         finish();
     }
 

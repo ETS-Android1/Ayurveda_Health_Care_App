@@ -6,10 +6,27 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:id="@+id/layout">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/Rel_layout"
         android:background="@color/backgroundColor">
+
+        <ImageView
+            android:id="@+id/header_cover_image"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:scaleType="centerCrop"
+
+            android:src="@drawable/ayurvedaprofilecover"
+            app:srcCompat="@drawable/ayurvedaprofilecover" />
+
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profilePicture"
@@ -19,28 +36,49 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:src="@drawable/profile"
+            android:layout_centerHorizontal="true"
+            android:elevation="5dp"
+            android:scaleType="centerCrop"
+            android:padding="5dp"
+            android:src="@drawable/prof"
             app:civ_border_width="2dp"
             app:civ_border_color="#299125"/>
 
+    </RelativeLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/backgroundColor"
+        android:layout_below="@+id/Rel_layout">
+
+        <TextView
+            android:id="@+id/activity_main_fullName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:drawableLeft="@drawable/ic_baseline_person_24"
+            android:drawablePadding="5dp"
+            android:text="Name: "
+            android:textColor="#000000"
+            android:textSize="20sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
             android:id="@+id/fullName"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="36dp"
-            android:layout_marginEnd="8dp"
-            android:layout_toRightOf="@id/profilePicture"
-            android:drawableLeft="@drawable/ic_baseline_person_24"
-            android:drawablePadding="5dp"
-            android:text="Full Name"
+            android:layout_margin="5dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
             android:textColor="#000000"
             android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.49"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profilePicture" />
+            android:text="Your Name"
+            app:layout_constraintLeft_toRightOf="@+id/activity_main_fullName"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/button"
@@ -60,56 +98,92 @@
             app:layout_constraintTop_toBottomOf="@+id/changePassword" />
 
         <TextView
-            android:id="@+id/Email"
-            android:layout_width="match_parent"
+            android:id="@+id/activity_main_Email"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginStart="8dp"
             android:layout_marginTop="32dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
             android:drawableLeft="@drawable/ic_baseline_email_24"
             android:drawablePadding="5dp"
-            android:text="Email"
+            android:text="Email: "
             android:textColor="#000000"
             android:textSize="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/activity_main_fullName" />
+
+        <TextView
+            android:id="@+id/Email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="32dp"
+            android:text="Email"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/activity_main_phone"
+            app:layout_constraintStart_toEndOf="@+id/activity_main_Email"
             app:layout_constraintTop_toBottomOf="@+id/fullName" />
 
         <TextView
-            android:id="@+id/phone"
-            android:layout_width="match_parent"
+            android:id="@+id/activity_main_phone"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="8dp"
             android:layout_marginTop="32dp"
-            android:layout_marginEnd="8dp"
             android:drawableLeft="@drawable/ic_baseline_phone_24"
             android:drawablePadding="5dp"
-            android:text="Phone Number"
+            android:text="Phone Number: "
             android:textColor="#000000"
             android:textSize="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Email" />
+            app:layout_constraintTop_toBottomOf="@+id/activity_main_Email" />
+
+        <TextView
+            android:id="@+id/phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="32dp"
+            android:text="Phone Number"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/activity_main_birthDate"
+            app:layout_constraintStart_toEndOf="@+id/activity_main_phone"
+            app:layout_constraintTop_toBottomOf="@+id/activity_main_Email" />
+
+        <TextView
+            android:id="@+id/activity_main_birthDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="32dp"
+            android:drawableLeft="@drawable/ic_baseline_cake_24"
+            android:drawablePadding="5dp"
+            android:text="Birth Date: "
+            android:textColor="#000000"
+            android:textSize="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/activity_main_phone" />
 
         <TextView
             android:id="@+id/birthDate"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_margin="5dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="32dp"
-            android:layout_marginEnd="8dp"
-            android:drawableLeft="@drawable/ic_baseline_cake_24"
-            android:drawablePadding="5dp"
-            android:text="Birth Date"
+            android:text="BirthDate"
             android:textColor="#000000"
-            android:textSize="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/phone" />
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/changeProPic"
+            app:layout_constraintStart_toEndOf="@+id/activity_main_birthDate"
+            app:layout_constraintTop_toBottomOf="@+id/activity_main_phone"
+            app:layout_constraintVertical_bias="0.16000003" />
 
         <Button
             android:id="@+id/changePassword"
@@ -139,8 +213,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/birthDate" />
+            app:layout_constraintTop_toBottomOf="@+id/activity_main_birthDate" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
 </ScrollView>
 

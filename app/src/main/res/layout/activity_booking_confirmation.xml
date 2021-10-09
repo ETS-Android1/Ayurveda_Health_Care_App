@@ -34,7 +34,7 @@
         app:tint="@color/white" />
 
     <TextView
-        android:id="@+id/textMessage"
+        android:id="@+id/textMessageConfirm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="18sp"
@@ -60,7 +60,7 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textMessage" />
+        app:layout_constraintTop_toBottomOf="@id/textMessageConfirm" />
 
     <TextView
         android:id="@+id/booked_date"

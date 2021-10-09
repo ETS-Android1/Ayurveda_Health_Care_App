@@ -87,7 +87,7 @@ public class Doctor_dashboard extends AppCompatActivity  {
         doctor_me.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                Intent intent = new Intent(getApplicationContext(), ProfileDoctor.class);
                 startActivity(intent);
                 finish();
             }

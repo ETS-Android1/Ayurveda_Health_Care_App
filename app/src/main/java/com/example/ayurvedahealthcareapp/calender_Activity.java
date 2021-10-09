@@ -83,7 +83,7 @@ public class calender_Activity extends AppCompatActivity implements IBookingInfo
                 Timestamp toDayTimeStamp = new Timestamp(calendar.getTime());
 
                 //selecting info where done = false and timestamp greater than today
-                userBooking.whereGreaterThan("timestamp", toDayTimeStamp).whereEqualTo("done", false)
+                userBooking.whereGreaterThanOrEqualTo("timestamp", toDayTimeStamp).whereEqualTo("done", false)
                             .limit(1).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {

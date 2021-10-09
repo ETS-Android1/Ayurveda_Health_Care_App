@@ -3,7 +3,9 @@ package com.example.ayurvedahealthcareapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -176,6 +178,7 @@ public class BookingConfirmation extends AppCompatActivity {
                             resetStaticData();
                             startActivity(new Intent(getApplicationContext(), Dashboard.class));
                             Toast.makeText(BookingConfirmation.this, "Appointment is Successful!", Toast.LENGTH_SHORT).show();
+
                         }
                     }
                 });
