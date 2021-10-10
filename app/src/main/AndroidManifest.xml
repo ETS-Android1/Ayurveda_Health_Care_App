@@ -18,7 +18,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AyurvedaHealthCareApp">
-        <activity android:name=".ProfileDoctor"></activity>
+        <activity android:name=".AppointmentDoctor"></activity>
+        <activity android:name=".ProfileDoctor" />
         <activity android:name=".BookingConfirmation" />
         <activity android:name=".Booking" />
         <activity android:name=".Doctor_dashboard" />

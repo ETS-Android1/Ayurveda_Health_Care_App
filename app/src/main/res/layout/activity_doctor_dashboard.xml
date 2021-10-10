@@ -78,6 +78,7 @@
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
         <androidx.cardview.widget.CardView
+            android:id="@+id/doctor_appointment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:elevation="20dp"

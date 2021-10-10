@@ -117,30 +117,7 @@ public class Booking extends AppCompatActivity implements ITimeSlotListener {
         });
     }
 
-    /*private void showSuccessDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(Booking.this);
-        View view = LayoutInflater.from(Booking.this).inflate(R.layout.layout_success_dialog,
-                (ConstraintLayout)findViewById(R.id.layoutDialogContainer));
-        builder.setView(view);
 
-        ((TextView) view.findViewById(R.id.booked_time))
-                .setText(adapter.convertTimeSlotToString(time));
-        final Button okay = (Button) view.findViewById(R.id.buttonAction);
-
-        final AlertDialog alertDialog = builder.create();
-        view.findViewById(R.id.buttonAction).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                alertDialog.dismiss();
-                startActivity(new Intent(getApplicationContext(), Dashboard.class));
-                finish();
-            }
-        });
-        if (alertDialog.getWindow() != null){
-            alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
-        }
-        alertDialog.show();
-    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
