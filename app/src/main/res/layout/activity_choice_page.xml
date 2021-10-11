@@ -7,6 +7,7 @@
     android:background="@color/backgroundColor"
     tools:context=".ChoicePage">
 
+
     <TextView
         android:id="@+id/whoAreYou"
         android:layout_width="wrap_content"
@@ -16,28 +17,51 @@
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.25" />
+        app:layout_constraintVertical_bias="0.157" />
+
+    <ImageView
+        android:layout_marginTop="60dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/surgeon"
+        android:id="@+id/dimage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/whoAreYou"
+        />
 
     <Button
         android:id="@+id/doctorBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="0dp"
         android:backgroundTint="#299125"
         android:text="Doctor"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/whoAreYou" />
+        app:layout_constraintTop_toBottomOf="@+id/dimage" />
+
+    <ImageView
+        android:layout_marginTop="60dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/prof"
+        android:id="@+id/pimage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/or"
+        />
 
     <Button
         android:id="@+id/patientBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="0dp"
         android:backgroundTint="#299125"
         android:text="Patient"
         android:textColor="#FFFFFF"
@@ -45,7 +69,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/or" />
+        app:layout_constraintTop_toBottomOf="@+id/pimage" />
 
     <TextView
         android:id="@+id/or"

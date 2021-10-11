@@ -5,7 +5,9 @@
 android:layout_height="wrap_content"
 xmlns:app="http://schemas.android.com/apk/res-auto"
 android:padding="8dp"
-android:layout_marginHorizontal="8dp">
+
+android:background="@drawable/lines"
+  >
 <ImageView
     android:id="@+id/title_image"
     android:layout_width="80dp"
@@ -45,7 +47,7 @@ android:layout_marginHorizontal="8dp">
             android:text="m;msdmv;m;'vm'mdmsavdsvd
 bsbbdbdbfdb dv"
             android:textColor="@color/black"
-
+                android:padding="10dp"
             android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="@+id/expandedLayout"
             app:layout_constraintEnd_toEndOf="parent"
@@ -55,6 +57,8 @@ bsbbdbdbfdb dv"
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -34,15 +34,15 @@ public class home_remidies_Activity extends AppCompatActivity {
 
 
         newsHeading=new String[]{
-                "Chronic Fever ","Thigh pain "," cycling and running. SWEAT IN HAND AND FEET","Nails Problems: nails have moved on, Nails Itching, Nails wound,  corner of the nails of the finger due to inflammation, Inflammation of hands and feet,  Inflammation in feet soles","Problems in Legs: Decomposition of feet finger, Feet Ringworm","MRSA (methicillin resistant staphylococcus aureus)","BURNS:Burns are among the most common household injuries, especially in children","Chest Pain: RIB The veins become tight due to check phlegm in the lungs because of that patient suffer from ribs pain. PNEUMONIA"
-                ,"Anger,  depression, Forgetfullness"
+                "Chronic Fever ","Thigh pain ","Cycling and Running","Nails Problems","Problems in Legs","MRSA ","Burns","Chest Pain"
+                ,"Anger:Depression:Forgetfullness"
         };
         briefNews=new String[]
                 {
                         getString(R.string.new_1),
                         getString(R.string.new_2),
-                        getString(R.string.new_3),
                         getString(R.string.new_4),
+                        getString(R.string.new_3),
                         getString(R.string.new_5),
                         getString(R.string.new_6),
                         getString(R.string.new_7),
@@ -55,9 +55,9 @@ public class home_remidies_Activity extends AppCompatActivity {
         imageResourceId=new int[]{
                 R.drawable.fever,
                 R.drawable.handlegs,
+                R.drawable.bicycle,
                 R.drawable.nails,
                 R.drawable.legs,
-                R.drawable.skin1,
                 R.drawable.skin2,
                 R.drawable.skin3,
                 R.drawable.chestpain,

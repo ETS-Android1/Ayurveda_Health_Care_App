@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
 android:layout_height="wrap_content"
 xmlns:app="http://schemas.android.com/apk/res-auto"
 android:padding="8dp"
@@ -43,7 +44,7 @@ android:layout_marginHorizontal="8dp">
         android:layout_height="wrap_content"
         android:textSize="15sp"
         android:textColor="@color/black"
-
+        android:padding="10dp"
         android:text="m;msdmv;m;'vm'mdmsavdsvd
 bsbbdbdbfdb dv"
         app:layout_constraintBottom_toBottomOf="@+id/mexpandedLayout"
@@ -52,15 +53,8 @@ bsbbdbdbfdb dv"
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-<View
-    android:layout_width="match_parent"
-    android:layout_height="1dp"
-    android:layout_margin="3dp"
-    android:background="@color/underline"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="parent"
 
-    />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
