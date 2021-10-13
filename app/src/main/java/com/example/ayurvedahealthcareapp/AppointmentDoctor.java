@@ -29,9 +29,9 @@ import devs.mulham.horizontalcalendar.HorizontalCalendar;
 import devs.mulham.horizontalcalendar.HorizontalCalendarView;
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener;
 
-public class AppointmentDoctor extends AppCompatActivity implements ITimeSlotListener {
+public class AppointmentDoctor extends AppCompatActivity implements IDoctorTimeSlotListener {
 
-    ITimeSlotListener iTimeSlotListener;
+    IDoctorTimeSlotListener iDoctorTimeSlotListener;
     DocumentReference doctorDoc;
 
     private RecyclerView recyclerView;
@@ -42,7 +42,7 @@ public class AppointmentDoctor extends AppCompatActivity implements ITimeSlotLis
 
     HorizontalCalendarView calendarView;
     SimpleDateFormat simpleDateFormat;
-    Calendar selected_date;
+    //Calendar selected_date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,12 +54,12 @@ public class AppointmentDoctor extends AppCompatActivity implements ITimeSlotLis
 
         userId      = fAuth.getCurrentUser().getUid();
 
-        iTimeSlotListener = this;
+        iDoctorTimeSlotListener = this;
         recyclerView = findViewById(R.id.doctor_recycler_time_slot);
         calendarView = findViewById(R.id.doctor_calendar_view);
 
         simpleDateFormat = new SimpleDateFormat("dd_MM_yyyy");
-        selected_date = Calendar.getInstance();
+        //selected_date = Calendar.getInstance();
 
         Calendar date = Calendar.getInstance();
         date.add(Calendar.DATE,0);
@@ -82,8 +82,8 @@ public class AppointmentDoctor extends AppCompatActivity implements ITimeSlotLis
         horizontalCalendar.setCalendarListener(new HorizontalCalendarListener() {
             @Override
             public void onDateSelected(Calendar date, int position) {
-                if(selected_date.getTimeInMillis() != date.getTimeInMillis()){
-                    selected_date = date;
+                if(CommonValues.selectedDate.getTimeInMillis() != date.getTimeInMillis()){
+                    CommonValues.selectedDate = date;
                     loadAvailableTimeSlotOfDoctor(userId,simpleDateFormat.format(date.getTime()));
                 }
             }
@@ -111,15 +111,15 @@ public class AppointmentDoctor extends AppCompatActivity implements ITimeSlotLis
                                 if(task.isSuccessful()){
                                     QuerySnapshot querySnapshot = task.getResult();
                                     if(querySnapshot.isEmpty()){
-                                        iTimeSlotListener.onTimeSlotLoadEmpty();
+                                        iDoctorTimeSlotListener.onTimeSlotLoadEmpty();
                                     }
                                     else {
                                         // If we have appointments
-                                        List<TimeSlot> timeSlots = new ArrayList<>();
+                                        List<BookingInformation> timeSlots = new ArrayList<>();
                                         for(QueryDocumentSnapshot document:task.getResult()){
-                                            timeSlots.add(document.toObject(TimeSlot.class));
+                                            timeSlots.add(document.toObject(BookingInformation.class));
                                         }
-                                        iTimeSlotListener.onTimeSlotLoadSuccess(timeSlots);
+                                        iDoctorTimeSlotListener.onTimeSlotLoadSuccess(timeSlots);
 
                                     }
                                 }
@@ -127,7 +127,7 @@ public class AppointmentDoctor extends AppCompatActivity implements ITimeSlotLis
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                iTimeSlotListener.onTimeSlotLoadFailed(e.getMessage());
+                                iDoctorTimeSlotListener.onTimeSlotLoadFailed(e.getMessage());
                             }
                         });
                     }
@@ -137,7 +137,7 @@ public class AppointmentDoctor extends AppCompatActivity implements ITimeSlotLis
     }
 
     @Override
-    public void onTimeSlotLoadSuccess(List<TimeSlot> timeSlotList) {
+    public void onTimeSlotLoadSuccess(List<BookingInformation> timeSlotList) {
 
         MyDoctorTimeSlotAdapter adapter = new MyDoctorTimeSlotAdapter(AppointmentDoctor.this,timeSlotList);
         recyclerView.setAdapter(adapter);

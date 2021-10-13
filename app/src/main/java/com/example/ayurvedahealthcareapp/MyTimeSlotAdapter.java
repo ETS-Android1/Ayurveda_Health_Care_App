@@ -69,6 +69,7 @@ public class MyTimeSlotAdapter extends RecyclerView.Adapter<MyTimeSlotAdapter.My
                     holder.time_slot_text.setText("Booked!!");
                     holder.time_slot_text.setTextColor(context.getResources().getColor(android.R.color.white));
                     holder.time_slot.setTextColor(context.getResources().getColor(android.R.color.white));
+                    holder.card_time_slot.setEnabled(false);
                 }
             }
         }

@@ -7,11 +7,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,11 +29,11 @@ import java.util.List;
 public class MyDoctorTimeSlotAdapter extends RecyclerView.Adapter<MyDoctorTimeSlotAdapter.MyViewHolder> {
 
     Context context;
-    List<TimeSlot> timeSlotList;
+    List<BookingInformation> timeSlotList;
     List<CardView> cardViewList;
 
 
-    public MyDoctorTimeSlotAdapter(Context context, List<TimeSlot> timeSlotList) {
+    public MyDoctorTimeSlotAdapter(Context context, List<BookingInformation> timeSlotList) {
         this.context = context;
         this.timeSlotList = timeSlotList;
         cardViewList = new ArrayList<>();
@@ -54,9 +64,16 @@ public class MyDoctorTimeSlotAdapter extends RecyclerView.Adapter<MyDoctorTimeSl
             holder.time_slot_text.setTextColor(Color.parseColor("#299125"));
             holder.time_slot.setTextColor(context.getResources().getColor(android.R.color.black));
 
+
+            holder.setiRecyclerItemSelectedListener(new IRecyclerItemSelectedListener() {
+                @Override
+                public void onItemSelectedListener(View view, int pos) {
+                    //Do nothing
+                }
+            });
         }
         else {
-            for(TimeSlot slotValue:timeSlotList){
+            for(BookingInformation slotValue:timeSlotList){
 
                 int slot = Integer.parseInt(String.valueOf(slotValue.getSlot()));
                 if(slot == position){
@@ -65,6 +82,47 @@ public class MyDoctorTimeSlotAdapter extends RecyclerView.Adapter<MyDoctorTimeSl
                     holder.time_slot_text.setText("Booked!!");
                     holder.time_slot_text.setTextColor(context.getResources().getColor(android.R.color.white));
                     holder.time_slot.setTextColor(context.getResources().getColor(android.R.color.white));
+
+                    holder.setiRecyclerItemSelectedListener(new IRecyclerItemSelectedListener() {
+                        @Override
+                        public void onItemSelectedListener(View view, int pos) {
+                            //display the patient details.
+                            FirebaseFirestore.getInstance().collection("Users")
+                                    .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                    .collection(CommonValues.simpleDateFormat.format(CommonValues.selectedDate.getTime()))
+                                    .document(String.valueOf(slotValue.getSlot()))
+                                    .get().addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            }).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                    if(task.isSuccessful())
+                                    {
+                                        if(task.getResult().exists())
+                                        {
+                                            CommonValues.currentBookingInformation = task.getResult().toObject(BookingInformation.class);
+
+                                            FinishAppointment addPhotoBottomDialogFragment = FinishAppointment.newInstance();
+                                            addPhotoBottomDialogFragment.show(((FragmentActivity)context).getSupportFragmentManager(), FinishAppointment.TAG);
+
+
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                    });
+                }
+                else{
+                    holder.setiRecyclerItemSelectedListener(new IRecyclerItemSelectedListener() {
+                        @Override
+                        public void onItemSelectedListener(View view, int pos) {
+                            //Do nothing
+                        }
+                    });
                 }
             }
         }
@@ -73,29 +131,9 @@ public class MyDoctorTimeSlotAdapter extends RecyclerView.Adapter<MyDoctorTimeSl
             cardViewList.add(holder.card_time_slot);
         }
 
-        holder.setiRecyclerItemSelectedListener(new IRecyclerItemSelectedListener() {
-            @Override
-            public void onItemSelectedListener(View view, int pos) {
-                for(CardView cardView: cardViewList){
-                    if(cardView.getTag() == null){ // Only available card slot will get changed
-                        holder.card_time_slot.setCardBackgroundColor(context.getResources().getColor(android.R.color.white));
-                    }
-                }
-                holder.card_time_slot.setCardBackgroundColor(Color.parseColor("#299125"));// change the colour of the selected card
 
-                /*Context context = view.getContext();
-
-                Intent intent = new Intent(context,BookingConfirmation.class);
-                intent.putExtra("Time Slot",pos);
-                CommonValues.currentTimeSlot = pos;
-
-                context.startActivity(intent);*/
-
-
-
-            }
-        });
     }
+
 
     public String convertTimeSlotToString(int slot) {
         switch (slot){
@@ -207,7 +245,6 @@ public class MyDoctorTimeSlotAdapter extends RecyclerView.Adapter<MyDoctorTimeSl
             card_time_slot = (CardView) itemView.findViewById(R.id.card_time_slot);
             time_slot = (TextView) itemView.findViewById(R.id.time);
             time_slot_text = (TextView) itemView.findViewById(R.id.available);
-
 
             itemView.setOnClickListener(this);
         }
