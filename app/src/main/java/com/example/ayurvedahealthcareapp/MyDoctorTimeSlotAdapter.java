@@ -76,53 +76,71 @@ public class MyDoctorTimeSlotAdapter extends RecyclerView.Adapter<MyDoctorTimeSl
             for(BookingInformation slotValue:timeSlotList){
 
                 int slot = Integer.parseInt(String.valueOf(slotValue.getSlot()));
-                if(slot == position){
-                    holder.card_time_slot.setTag("DISABLE_TAG"); // to change the background of the remaining cards
-                    holder.card_time_slot.setCardBackgroundColor(Color.parseColor("#299125"));
-                    holder.time_slot_text.setText("Booked!!");
-                    holder.time_slot_text.setTextColor(context.getResources().getColor(android.R.color.white));
-                    holder.time_slot.setTextColor(context.getResources().getColor(android.R.color.white));
+                if(slot == position) {
 
-                    holder.setiRecyclerItemSelectedListener(new IRecyclerItemSelectedListener() {
-                        @Override
-                        public void onItemSelectedListener(View view, int pos) {
-                            //display the patient details.
-                            FirebaseFirestore.getInstance().collection("Users")
-                                    .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                    .collection(CommonValues.simpleDateFormat.format(CommonValues.selectedDate.getTime()))
-                                    .document(String.valueOf(slotValue.getSlot()))
-                                    .get().addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                            }).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                    if(task.isSuccessful())
-                                    {
-                                        if(task.getResult().exists())
-                                        {
-                                            CommonValues.currentBookingInformation = task.getResult().toObject(BookingInformation.class);
+                    if (!slotValue.isDone()) {
+                        holder.card_time_slot.setTag("DISABLE_TAG"); // to change the background of the remaining cards
+                        holder.card_time_slot.setCardBackgroundColor(Color.parseColor("#299125"));
+                        holder.time_slot_text.setText("Booked!!");
+                        holder.time_slot_text.setTextColor(context.getResources().getColor(android.R.color.white));
+                        holder.time_slot.setTextColor(context.getResources().getColor(android.R.color.white));
 
-                                            FinishAppointment addPhotoBottomDialogFragment = FinishAppointment.newInstance();
-                                            addPhotoBottomDialogFragment.show(((FragmentActivity)context).getSupportFragmentManager(), FinishAppointment.TAG);
+                        holder.setiRecyclerItemSelectedListener(new IRecyclerItemSelectedListener() {
+                            @Override
+                            public void onItemSelectedListener(View view, int pos) {
+                                //display the patient details.
+                                FirebaseFirestore.getInstance().collection("Users")
+                                        .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                        .collection(CommonValues.simpleDateFormat.format(CommonValues.selectedDate.getTime()))
+                                        .document(String.valueOf(slotValue.getSlot()))
+                                        .get().addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                }).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            if (task.getResult().exists()) {
+                                                CommonValues.currentBookingInformation = task.getResult().toObject(BookingInformation.class);
+                                                CommonValues.currentBookingInformation.setBookingId(task.getResult().getId());
+
+                                                FinishAppointment addPhotoBottomDialogFragment = FinishAppointment.newInstance();
+                                                addPhotoBottomDialogFragment.show(((FragmentActivity) context).getSupportFragmentManager(), FinishAppointment.TAG);
 
 
+                                            }
                                         }
                                     }
-                                }
-                            });
-                        }
-                    });
+                                });
+                            }
+                        });
+                    }
+                    else {
+                        holder.card_time_slot.setTag("DISABLE_TAG"); // to change the background of the remaining cards
+                        holder.card_time_slot.setCardBackgroundColor(context.getResources().getColor(android.R.color.darker_gray));
+                        holder.time_slot_text.setText("Done!!");
+                        holder.time_slot_text.setTextColor(context.getResources().getColor(android.R.color.white));
+                        holder.time_slot.setTextColor(context.getResources().getColor(android.R.color.white));
+
+                        holder.setiRecyclerItemSelectedListener(new IRecyclerItemSelectedListener() {
+                            @Override
+                            public void onItemSelectedListener(View view, int pos) {
+                                //Do nothing
+                            }
+                        });
+                    }
                 }
                 else{
-                    holder.setiRecyclerItemSelectedListener(new IRecyclerItemSelectedListener() {
-                        @Override
-                        public void onItemSelectedListener(View view, int pos) {
-                            //Do nothing
-                        }
-                    });
+                    if(holder.getiRecyclerItemSelectedListener() == null){
+                        holder.setiRecyclerItemSelectedListener(new IRecyclerItemSelectedListener() {
+                            @Override
+                            public void onItemSelectedListener(View view, int pos) {
+                                //Do nothing
+                            }
+                        });
+                    }
                 }
             }
         }
@@ -234,6 +252,10 @@ public class MyDoctorTimeSlotAdapter extends RecyclerView.Adapter<MyDoctorTimeSl
         CardView card_time_slot;
 
         IRecyclerItemSelectedListener iRecyclerItemSelectedListener;
+
+        public IRecyclerItemSelectedListener getiRecyclerItemSelectedListener() {
+            return iRecyclerItemSelectedListener;
+        }
 
         public void setiRecyclerItemSelectedListener(IRecyclerItemSelectedListener iRecyclerItemSelectedListener) {
             this.iRecyclerItemSelectedListener = iRecyclerItemSelectedListener;

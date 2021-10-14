@@ -3,7 +3,7 @@ package com.example.ayurvedahealthcareapp;
 import com.google.firebase.Timestamp;
 
 public class BookingInformation {
-    private String patientName,patientPhone,time,doctorId,doctorName;
+    private String bookingId,patientName,patientPhone,time,doctorId,doctorName;
     private long slot;
     private Timestamp timestamp;
     private boolean done;
@@ -18,6 +18,14 @@ public class BookingInformation {
         this.doctorId = doctorId;
         this.doctorName = doctorName;
         this.slot = slot;
+    }
+
+    public String getBookingId() {
+        return bookingId;
+    }
+
+    public void setBookingId(String bookingId) {
+        this.bookingId = bookingId;
     }
 
     public String getPatientName() {
