@@ -175,7 +175,7 @@ public class RegisterDoctor extends AppCompatActivity {
                                 }
                             });
 
-                            startActivity(new Intent(getApplicationContext(),Doctor_dashboard.class));
+                            startActivity(new Intent(getApplicationContext(),doctor_location.class));
 
                         }
                         else{
