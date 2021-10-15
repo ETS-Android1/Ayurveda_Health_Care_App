@@ -98,6 +98,7 @@ public class BookingConfirmation extends AppCompatActivity {
 
                 bookingInformation.setTimestamp(timestamp);
                 bookingInformation.setDone(false); //always false
+                bookingInformation.setRatedDoctor(false); // has not rated the doctor
                 bookingInformation.setDoctorId(CommonValues.currentDoctor.getDoctorId());
                 bookingInformation.setDoctorName(CommonValues.currentDoctor.getfName());
                 bookingInformation.setPatientName(patientName);

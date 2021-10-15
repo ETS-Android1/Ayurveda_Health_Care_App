@@ -71,7 +71,7 @@ public class FinishAppointment extends BottomSheetDialogFragment {
             @Override
             public void onClick(View v) {
 
-                //appointment done. making done=true
+                //appointment done, making done=true
 
                 DocumentReference bookingSet = FirebaseFirestore.getInstance()
                         .collection("Users")

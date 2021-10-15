@@ -6,7 +6,7 @@ public class BookingInformation {
     private String bookingId,patientName,patientPhone,time,doctorId,doctorName;
     private long slot;
     private Timestamp timestamp;
-    private boolean done;
+    private boolean done,ratedDoctor;
 
     public BookingInformation() {
     }
@@ -90,5 +90,13 @@ public class BookingInformation {
 
     public void setDone(boolean done) {
         this.done = done;
+    }
+
+    public boolean isRatedDoctor() {
+        return ratedDoctor;
+    }
+
+    public void setRatedDoctor(boolean ratedDoctor) {
+        this.ratedDoctor = ratedDoctor;
     }
 }

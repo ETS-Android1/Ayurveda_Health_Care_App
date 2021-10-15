@@ -6,7 +6,8 @@ import android.os.Parcelable;
 public class Doctor implements Parcelable {
 
     private String fName,birthDate, email,phone, NIC,Registration_ID, pUrl,DoctorId;
-    private long rating;
+    private Double rating;
+    private Long ratingTimes;
 
     public Doctor() {
     }
@@ -20,7 +21,8 @@ public class Doctor implements Parcelable {
         Registration_ID = in.readString();
         pUrl = in.readString();
         DoctorId = in.readString();
-        rating = in.readLong();
+        rating = in.readDouble();
+        ratingTimes = in.readLong();
     }
 
     public static final Creator<Doctor> CREATOR = new Creator<Doctor>() {
@@ -99,12 +101,20 @@ public class Doctor implements Parcelable {
         this.phone = phone;
     }
 
-    public long getRating() {
+    public Double getRating() {
         return rating;
     }
 
-    public void setRating(long rating) {
+    public void setRating(Double rating) {
         this.rating = rating;
+    }
+
+    public Long getRatingTimes() {
+        return ratingTimes;
+    }
+
+    public void setRatingTimes(Long ratingTimes) {
+        this.ratingTimes = ratingTimes;
     }
 
     @Override
@@ -122,6 +132,8 @@ public class Doctor implements Parcelable {
         dest.writeString(Registration_ID);
         dest.writeString(pUrl);
         dest.writeString(DoctorId);
-        dest.writeLong(rating);
+        dest.writeDouble(rating);
+        dest.writeLong(ratingTimes);
+
     }
 }

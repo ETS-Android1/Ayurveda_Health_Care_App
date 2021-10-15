@@ -52,7 +52,10 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.docotorVie
     public void onBindViewHolder(@NonNull docotorViewholder holder, int position) {
         holder.dName.setText(doctorList.get(position).getfName());
         holder.phone.setText(doctorList.get(position).getPhone());
-        holder.rate.setRating((float)doctorList.get(position).getRating());
+        if(doctorList.get(position).getRatingTimes() != null)
+            holder.rate.setRating(doctorList.get(position).getRating().floatValue() / doctorList.get(position).getRatingTimes());
+        else
+            holder.rate.setRating(0);
         Glide.with(holder.img.getContext()).load(doctorList.get(position).getpUrl()).into(holder.img);
 
         if(!cardViewList.contains(holder.cardView)){

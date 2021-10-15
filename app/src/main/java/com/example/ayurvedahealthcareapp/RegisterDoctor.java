@@ -159,6 +159,8 @@ public class RegisterDoctor extends AppCompatActivity {
                             doctor.put("NIC",nic);
                             doctor.put("Registration_ID",regId);
                             doctor.put("isDoctor","1");
+                            doctor.put("rating",0);
+                            doctor.put("ratingTimes",0);
                             doctor.put("pUrl","https://firebasestorage.googleapis.com/v0/b/ayurveda-health-care-app.appspot.com/o/profile.png?alt=media&token=02b49adf-c9b7-4500-83ff-562177cec567");
 
                             documentReference.set(doctor).addOnSuccessListener(new OnSuccessListener<Void>() {
