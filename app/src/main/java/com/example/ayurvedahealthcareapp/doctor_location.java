@@ -58,7 +58,7 @@ public class doctor_location extends FragmentActivity implements OnMapReadyCallb
                     }
                     Address address = addressList.get(0);
                     LatLng latLng = new LatLng(address.getLatitude(),address.getLongitude());
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,12));
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,14));
                 }
                 return false;
             }
