@@ -34,8 +34,7 @@ public class medicine_Activity extends AppCompatActivity {
 
 
         newsHeading=new String[]{
-                "Komarika","Thigh pain: Pain in the muscles of thighs because of different reasons as by lifting heavy weight, cycling and running. SWEAT IN HAND AND FEET","Nails Problems: nails have moved on, Nails Itching, Nails wound,  corner of the nails of the finger due to inflammation, Inflammation of hands and feet,  Inflammation in feet soles","Problems in Legs: Decomposition of feet finger, Feet Ringworm","MRSA (methicillin resistant staphylococcus aureus)","BURNS:Burns are among the most common household injuries, especially in children","Chest Pain: RIB The veins become tight due to check phlegm in the lungs because of that patient suffer from ribs pain. PNEUMONIA"
-                ,"Anger  depression Forgetfullness"
+                "Komarika","Kohomba","Cumin","Bitter","Ashwagandha","Boswellia","Tumeric","Licorice","Brahmi"
         };
         briefNews=new String[]
                 {
@@ -47,21 +46,22 @@ public class medicine_Activity extends AppCompatActivity {
                         getString(R.string.new_6),
                         getString(R.string.new_7),
                         getString(R.string.new_8),
-                        "Anger depression forgetfullness",
+                        getString(R.string.new_9)
+
 
 
 
                 };
         imageResourceId=new int[]{
                 R.drawable.komarika,
-                R.drawable.handlegs,
-                R.drawable.nails,
-                R.drawable.legs,
-                R.drawable.skin1,
-                R.drawable.skin2,
-                R.drawable.skin3,
-                R.drawable.chestpain,
-                R.drawable.mentalhealth
+                R.drawable.kohomba,
+                R.drawable.cumin,
+                R.drawable.bitter,
+                R.drawable.ashwagandha,
+                R.drawable.boswellia,
+                R.drawable.tumeric,
+                R.drawable.licorice,
+                R.drawable.brahmi
 
         };
         getData();

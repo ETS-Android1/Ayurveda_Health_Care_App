@@ -39,15 +39,15 @@ public class home_remidies_Activity extends AppCompatActivity {
         };
         briefNews=new String[]
                 {
-                        getString(R.string.new_1),
-                        getString(R.string.new_2),
-                        getString(R.string.new_4),
-                        getString(R.string.new_3),
-                        getString(R.string.new_5),
-                        getString(R.string.new_6),
-                        getString(R.string.new_7),
-                        getString(R.string.new_8),
-                        "Anger depression forgetfullness",
+                        getString(R.string.new_11),
+                        getString(R.string.new_12),
+                        getString(R.string.new_13),
+                        getString(R.string.new_14),
+                        getString(R.string.new_15),
+                        getString(R.string.new_16),
+                        getString(R.string.new_17),
+                        getString(R.string.new_18),
+                        getString(R.string.new_19),
 
 
 
