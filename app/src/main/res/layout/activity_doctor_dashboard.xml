@@ -132,6 +132,7 @@
             app:cardCornerRadius="10dp"
             app:cardElevation="20dp"
             android:layout_margin="10dp"
+            android:id="@+id/medicineCard"
             >
             <RelativeLayout
 
@@ -177,6 +178,7 @@
             app:cardCornerRadius="10dp"
             app:cardElevation="20dp"
             android:layout_margin="10dp"
+
             >
             <RelativeLayout
 

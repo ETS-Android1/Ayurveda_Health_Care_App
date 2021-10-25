@@ -22,7 +22,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Doctor_dashboard extends AppCompatActivity  {
 
-    CardView doctor_me,doctor_appointment;
+    CardView doctor_me,doctor_appointment,doctor_medicine,medicine_Card;
     ImageView back;
     /*CircleImageView profileImage;
     FirebaseAuth fAuth;
@@ -37,6 +37,8 @@ public class Doctor_dashboard extends AppCompatActivity  {
         doctor_me           =(CardView) findViewById(R.id.d_me);
         doctor_appointment  =(CardView) findViewById(R.id.doctor_appointment);
         back                = findViewById(R.id.backImage);
+        medicine_Card       =(CardView)findViewById(R.id.medicineCard);
+
        /* profileImage = findViewById(R.id.profilePic);
 
         fAuth       = FirebaseAuth.getInstance();
@@ -84,6 +86,10 @@ public class Doctor_dashboard extends AppCompatActivity  {
 
             }
         });
+        final Intent intent2=new Intent(this,doctor_Activity.class);
+        //  String name="Vinod Piumantha ";
+        //   intent2.putExtra("User_Name",name );
+
 
         doctor_me.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,11 +100,11 @@ public class Doctor_dashboard extends AppCompatActivity  {
             }
         });
 
-        doctor_appointment.setOnClickListener(new View.OnClickListener() {
+        medicine_Card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), AppointmentDoctor.class);
-                startActivity(intent);
+                Intent intent6 = new Intent(getApplicationContext(), Doctor_Medicine.class);
+                startActivity(intent6);
                 finish();
             }
         });

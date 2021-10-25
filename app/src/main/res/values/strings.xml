@@ -8,6 +8,15 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
 
+    <string name="origin">Select Item</string>
+    <string name="select">Select Item</string>
+    <string-array name="type">
+        <item>Tablet</item>
+        <item>Liquid</item>
+        <item>Cream</item>
+        <item>Other</item>
+    </string-array>
+
 
     <string name="new_1">Chronic Fever:
         When a person suffers from fever until 21 days and temperature does not become normal, it is called chronic fever. Sometimes, the temperature in this fever become high and sometimes low. If a person suffers from indigestion and weakness, he becomes the victim of chronic fever.

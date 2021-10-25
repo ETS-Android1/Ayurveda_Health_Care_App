@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent">
+<LinearLayout
+
+    android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+tools:context=".Doctor_Medicine">
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".Doctor_Medicine">
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:hint="Select origin"
+
+            >
+
+            <!-- Inside text input layout add
+                  an auto complete text view
+                    and make its input type to none-->
+            <AutoCompleteTextView
+                android:id="@+id/auto_Complete_TextView1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:inputType="none"
+
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".MainActivity">
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:hint="@string/select"
+        >
+
+        <!-- Inside text input layout add
+              an auto complete text view
+                and make its input type to none-->
+        <AutoCompleteTextView
+            android:id="@+id/auto_Complete_TextView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:inputType="none"
+
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+<!--Edittext for getting course Name-->
+<EditText
+    android:id="@+id/idEdtMedicineName"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="10dp"
+    android:layout_marginTop="20dp"
+    android:layout_marginEnd="10dp"
+    android:hint="Medicine Name"
+    android:importantForAutofill="no"
+    android:inputType="text" />
+    <EditText
+        android:id="@+id/idEdtMedicineDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:hint="Indications"
+        android:importantForAutofill="no"
+        android:inputType="text" />
+
+
+<!--Edittext for getting course Duration-->
+<EditText
+    android:id="@+id/idEdtMedicineDuration"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="10dp"
+    android:layout_marginTop="20dp"
+    android:layout_marginEnd="10dp"
+    android:hint="Dosage"
+    android:importantForAutofill="no"
+    android:inputType="time" />
+
+<!--Edittext for getting course Description-->
+
+
+    <!--Button for adding your course to Firebase-->
+
+
+    <EditText
+        android:id="@+id/desid"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_margin="14dp"
+
+        android:hint="Description" />
+
+    <Button
+    android:id="@+id/idBtnSubmitCourse"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:text="Submit Course Details"
+    android:textAllCaps="false" />
+
+</LinearLayout>
+</ScrollView>
+
