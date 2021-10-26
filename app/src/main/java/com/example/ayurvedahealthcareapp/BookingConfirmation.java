@@ -142,7 +142,7 @@ public class BookingConfirmation extends AppCompatActivity {
 
     private void addToUserBooking(BookingInformation bookingInformation) {
 
-
+        // save the booking information in a new collection
         final CollectionReference userBooking = fStore.collection("Patients")
                 .document(patientPhone).collection("Booking");
 
@@ -153,14 +153,15 @@ public class BookingConfirmation extends AppCompatActivity {
 
         Timestamp toDayTimeStamp = new Timestamp(calendar.getTime());
 
+        //get booking which are not finished
         userBooking.whereGreaterThanOrEqualTo("timestamp",toDayTimeStamp).whereEqualTo("done",false)
                 .limit(1).get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if(task.getResult().isEmpty())
+                        if(task.getResult().isEmpty())  // if patient has no booking
                         {
-                            userBooking.document().set(bookingInformation)
+                            userBooking.document().set(bookingInformation)  //set the booking information
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {

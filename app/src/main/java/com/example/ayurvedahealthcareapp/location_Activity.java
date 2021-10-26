@@ -71,6 +71,7 @@ public class location_Activity extends FragmentActivity implements OnMapReadyCal
                 .findFragmentById(R.id.Patient_Google_map);
         searchView = findViewById(R.id.search_dcotor_location);
 
+        //fetch current location
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
@@ -82,24 +83,25 @@ public class location_Activity extends FragmentActivity implements OnMapReadyCal
             ActivityCompat.requestPermissions(location_Activity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},100);
         }
 
-
+        // search place by searchview
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 String location = searchView.getQuery().toString();
                 List<Address> addressList = null;
 
+                //when user enters a place
                 if (location != null || !location.equals("")) {
                     Geocoder geocoder = new Geocoder(location_Activity.this);
                     try {
                         addressList = geocoder.getFromLocationName(location, 1);
-
+                        // get location
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                     Address address = addressList.get(0);
                     LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
-                    pMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+                    pMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15)); // zoom in on the searched location
                 }
                 return false;
             }

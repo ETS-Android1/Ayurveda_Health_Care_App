@@ -84,7 +84,7 @@ public class AppointmentDoctor extends AppCompatActivity implements IDoctorTimeS
             public void onDateSelected(Calendar date, int position) {
                 if(CommonValues.selectedDate.getTimeInMillis() != date.getTimeInMillis()){
                     CommonValues.selectedDate = date;
-                    loadAvailableTimeSlotOfDoctor(userId,simpleDateFormat.format(date.getTime()));
+                    loadAvailableTimeSlotOfDoctor(userId,simpleDateFormat.format(date.getTime())); //load the available time slots of the doctor
                 }
             }
         });

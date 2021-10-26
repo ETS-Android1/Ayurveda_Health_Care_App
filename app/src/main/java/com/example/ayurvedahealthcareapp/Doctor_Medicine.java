@@ -2,6 +2,7 @@ package com.example.ayurvedahealthcareapp;
 
 
 
+import android.content.Intent;
 import android.os.Bundle;
         import android.text.TextUtils;
         import android.view.View;
@@ -105,11 +106,11 @@ public class Doctor_Medicine extends AppCompatActivity {
 
                 // validating the text fields if empty or not.
                 if (TextUtils.isEmpty(medicineName)) {
-                    medicineNameEdt.setError("Please enter Course Name");
+                    medicineNameEdt.setError("Please enter Medicine Name");
                 } else if (TextUtils.isEmpty(medicineDescription)) {
-                    medicineeDescriptionEdt.setError("Please enter Course Description");
+                    medicineeDescriptionEdt.setError("Please enter Medicine Description");
                 } else if (TextUtils.isEmpty(medicineDuration)) {
-                    medicineDurationEdt.setError("Please enter Course Duration");
+                    medicineDurationEdt.setError("Please enter Medicine amount");
                 } else {
                     // calling method to add data to Firebase Firestore.
                     addDataToFirestore(medicineName, medicineDescription, medicineDuration,typeId1,typeId,dicription);
@@ -122,7 +123,7 @@ public class Doctor_Medicine extends AppCompatActivity {
     private void addDataToFirestore( String medicineName, String medicineDescription, String medicineDuration, String dicription,String origin,String type) {
 
         // creating a collection reference
-        // for our Firebase Firetore database.
+        // for our Firebase Firestore database.
        
         CollectionReference doctorDoc = fStore.collection("Users").document(userId).collection("Medicine");
 
@@ -135,15 +136,23 @@ public class Doctor_Medicine extends AppCompatActivity {
             public void onSuccess(DocumentReference documentReference) {
                 // after the data addition is successful
                 // we are displaying a success toast message.
-                Toast.makeText(Doctor_Medicine.this, "Your Course has been added to Firebase Firestore", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Doctor_Medicine.this, "Your medicine has been added to the Database", Toast.LENGTH_SHORT).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 // this method is called when the data addition process is failed.
                 // displaying a toast message when data addition is failed.
-                Toast.makeText(Doctor_Medicine.this, "Fail to add course \n" + e, Toast.LENGTH_SHORT).show();
+                Toast.makeText(Doctor_Medicine.this, "Fail to add medicine \n" + e, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        startActivity(new Intent(getApplicationContext(), Doctor_dashboard.class));
+        finish();
     }
 }

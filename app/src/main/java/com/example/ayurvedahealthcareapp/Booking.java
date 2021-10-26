@@ -53,8 +53,8 @@ public class Booking extends AppCompatActivity implements ITimeSlotListener {
     SimpleDateFormat simpleDateFormat;
     public static Calendar selected_date;
 
-    public static String receiveDoctorID;
-    public static String receiveDoctorName;
+    //public static String receiveDoctorID;
+    //public static String receiveDoctorName;
 
 
 
@@ -71,8 +71,8 @@ public class Booking extends AppCompatActivity implements ITimeSlotListener {
 
     private void loadAvailableTimeSlotOfDoctor(String doctorId, final String bookDate) {
 
-        receiveDoctorID = getIntent().getExtras().get("Doctor Selected").toString();
-        receiveDoctorName = getIntent().getExtras().get("Doctor Name").toString();
+        //receiveDoctorID = getIntent().getExtras().get("Doctor Selected").toString();
+        //receiveDoctorName = getIntent().getExtras().get("Doctor Name").toString();
 
         doctorDoc = FirebaseFirestore.getInstance().collection("Users").document(CommonValues.currentDoctor.getDoctorId());
 

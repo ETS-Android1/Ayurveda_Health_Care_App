@@ -22,6 +22,7 @@
             android:background="@drawable/warning_background"
             android:padding="10dp"
             android:textColor="@color/white"
+            android:text="Confirm?"
             android:textSize="17sp"
             android:textStyle="bold"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -30,6 +31,7 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_marginEnd="10dp"
+            android:src="@drawable/ic_baseline_back_hand_24"
             android:contentDescription="@string/app_name"
             app:layout_constraintBottom_toBottomOf="@id/textTitle"
             app:layout_constraintEnd_toEndOf="parent"

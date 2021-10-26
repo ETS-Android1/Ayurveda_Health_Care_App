@@ -51,6 +51,7 @@ public class doctor_Activity extends AppCompatActivity {
         doctorRef = FirebaseFirestore.getInstance().collection("Users");
         doctors= new ArrayList<>();
 
+        //get the doctors where isDoctor = 1
         doctorRef.whereEqualTo("isDoctor","1").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -58,7 +59,7 @@ public class doctor_Activity extends AppCompatActivity {
                 for(QueryDocumentSnapshot doctorSnapshot:task.getResult()){
                     Doctor doctor = doctorSnapshot.toObject(Doctor.class);
                     doctor.setDoctorId(doctorSnapshot.getId());
-
+                    //add doctor to the list
                     doctors.add(doctor);
                 }
                 doctorAdapter.notifyDataSetChanged();
@@ -73,7 +74,7 @@ public class doctor_Activity extends AppCompatActivity {
                 Log.d(TAG, "onFailure: "+e.toString());
             }
         });
-
+        // send the details to the adpter class
         doctorAdapter = new DoctorAdapter(this,doctors);
         recyclerView.setAdapter(doctorAdapter);
 
