@@ -122,7 +122,7 @@ public class RegisterDoctor extends AppCompatActivity {
                     dNic.setError("NIC number is required");
                     return;
                 }
-                if(nic.length() < 10 || nic.length() > 12){
+                if(nic.length() != 10 && nic.length() != 12){
                     dNic.setError("Enter a valid NIC number!");
                     return;
                 }
